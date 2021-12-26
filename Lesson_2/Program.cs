@@ -14,12 +14,12 @@ namespace Lesson_2
             Console.WriteLine("Type your full name");
             string fullName = Console.ReadLine();
             // adding Age with input check
-            int age;
+            byte age;
             for ( ; ; )
             {
                 Console.WriteLine("Type your age");
                 
-                if (int.TryParse(Console.ReadLine(), out age))
+                if (byte.TryParse(Console.ReadLine(), out age))
                 {
                     if (age < 12)
                     {
