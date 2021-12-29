@@ -81,15 +81,15 @@ namespace Lesson_3
             Console.WriteLine("Enter an integer");
             int number = EnterInt();
             bool result = false;
-            int i = 2;
-            while (i < number)
+            int z = 2;
+            while (z < number)
             {
-                if (number % i == 0)
+                if (number % z == 0)
                 {
                     result = true;
                     break;
                 }
-                else i++;
+                else z++;
             }
             if (result) Console.WriteLine("The number is not a prime one");
             else Console.WriteLine("The number is a prime one");
