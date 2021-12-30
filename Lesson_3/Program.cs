@@ -85,6 +85,11 @@ namespace Lesson_3
                 Console.WriteLine("You entered ZERO!");
                 goto endmark;
             }
+            else if (number == 1)
+            {
+                Console.WriteLine("You entered ONE!");
+                goto endmark;
+            }
             bool result = false;
             int z = 2;
             while (z < number)
