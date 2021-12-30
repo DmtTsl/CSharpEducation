@@ -80,6 +80,11 @@ namespace Lesson_3
         mark:
             Console.WriteLine("Enter an integer");
             int number = EnterInt();
+            if(number == 0)
+            {
+                Console.WriteLine("You entered ZERO!");
+                goto endmark;
+            }
             bool result = false;
             int z = 2;
             while (z < number)
@@ -93,7 +98,7 @@ namespace Lesson_3
             }
             if (result) Console.WriteLine("The number is not a prime one");
             else Console.WriteLine("The number is a prime one");
-
+            endmark:
             for (; ; )
             {
                 Console.WriteLine("Once again? Y/N");
