@@ -67,6 +67,7 @@ namespace Lesson_4
                 if(!int.TryParse(Console.ReadLine(),out a))
                 {
                     Console.WriteLine($"The hidden number is {hiddenNumber}\nGood bye!");
+                    Console.ReadKey();
                     return;
                 }
                 if (a == hiddenNumber)
