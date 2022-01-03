@@ -58,8 +58,8 @@ namespace Lesson_4
         #region task 3
         mark:
             Console.WriteLine("Enter the max value of the hidden number");
-            Random r = new Random();
-            int hiddenNumber = r.Next(0,int.Parse(Console.ReadLine())+1);
+            Random rand = new Random();
+            int hiddenNumber = rand.Next(0,int.Parse(Console.ReadLine())+1);
             while(true)
             {
                 Console.WriteLine("Enter the hidden number");
@@ -80,7 +80,7 @@ namespace Lesson_4
                     Console.WriteLine("Your number is lower than the hidden one");
                     continue;
                 }
-                else if (a > hiddenNumber)
+                else
                 {
                     Console.WriteLine("Your number is higher than the hidden one");
                     continue;
