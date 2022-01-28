@@ -193,7 +193,7 @@ namespace Lesson_7
         public static string Title()
         {
             string[] title = { "ID","Дата и время записи","ФИО","Возраст","Рост","Дата рождения","Место рождения" };
-            string s = $"{title[0]}\t{title[1]}\t{title[2],-30}\t{title[3]}\t{title[4]}\t{title[5]}\t{title[6]}";
+            string s = $"{title[0]}\t{title[1]}\t{title[2],-32}\t{title[3]}\t{title[4]}\t{title[5]}\t{title[6]}";
 
             return s;
         }
