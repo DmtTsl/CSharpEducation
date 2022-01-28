@@ -10,13 +10,13 @@ using System.Windows.Forms;
 namespace Lesson_7
 {
     struct Actions
-
+        
     {/// <summary>
-     /// Проверка на возможность преобразования в Int32
-     /// Если успешно, то возвращается число
-     /// Если ошибка, то выводится сообщение о неверном вводе
-     /// </summary>
-     /// <returns>Значение INT32</returns>
+    /// Проверка на возможность преобразования в Int32
+    /// Если успешно, то возвращается число
+    /// Если ошибка, то выводится сообщение о неверном вводе
+    /// </summary>
+    /// <returns>Значение INT32</returns>
         public static int TryParse()
         {
             int value;
@@ -27,7 +27,7 @@ namespace Lesson_7
             return value;
         }
 
-
+        
 
         /// <summary>
         /// открывает окно Виндоус выбора файла
@@ -101,7 +101,7 @@ namespace Lesson_7
         /// <returns></returns>
         public static int ChoiceOf6()
         {
-
+            
             int choice;
             while (!int.TryParse(Console.ReadLine(), out choice) || (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6))
             {
@@ -110,8 +110,8 @@ namespace Lesson_7
             return choice;
         }
 
-
-
+        
+        
         /// <summary>
         /// 
         /// </summary>
@@ -141,7 +141,7 @@ namespace Lesson_7
 
 
         //Console.WriteLine("Выберите действие:\n1 - Вывести запись на экран\n2 - Добавить новую запись\n3 - Удалить запись\n" +
-        //       "4 - Редактировать запись\n5 - Выбрать диапазон дат для загрузки записей\n6 - Отсортировать по дате");
+         //       "4 - Редактировать запись\n5 - Выбрать диапазон дат для загрузки записей\n6 - Отсортировать по дате");
 
         /// <summary>
         /// Позволяет выбрать существующий файл или создать новый
@@ -162,9 +162,9 @@ namespace Lesson_7
                     Console.WriteLine("Такой файл существует.\n1 - открыть существующий файл\n2 - создать файл с другим именем или расположением");
                     if (ChoiceOf2() == 1)
                     {
-
+                        
                         return fileName;
-
+                        
                     }
                     else
                     {
@@ -174,22 +174,22 @@ namespace Lesson_7
                 }
                 else
                 {
-
+                   
                     return fileName;
-
+                   
                 }
-
+                           
             }
             else
             {
-
+                
                 string fileName = FileSelection();
-                return fileName;
+                return fileName;               
 
             }
         }
 
-
+        
         public static string Title()
         {
             string[] title = { "ID","Дата и время записи","ФИО","Возраст","Рост","Дата рождения","Место рождения" };
@@ -197,7 +197,7 @@ namespace Lesson_7
 
             return s;
         }
-
+        
 
     }
 }
