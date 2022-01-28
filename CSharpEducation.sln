@@ -35,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1Framework", "Tra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsFramework", "Training\WindowsFormsFramework\WindowsFormsFramework.csproj", "{1CD32594-E81B-433C-80F0-1A8F2F5FC758}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lesson_7", "Lesson_7", "{60A6B6F4-56A0-4E28-BB37-F8B08CF4A7AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task_1", "Lesson_7\Task_1\Task_1.csproj", "{3131DD90-6A18-4D74-8A7E-F8A3F886FB24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,10 @@ Global
 		{1CD32594-E81B-433C-80F0-1A8F2F5FC758}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CD32594-E81B-433C-80F0-1A8F2F5FC758}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CD32594-E81B-433C-80F0-1A8F2F5FC758}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3131DD90-6A18-4D74-8A7E-F8A3F886FB24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3131DD90-6A18-4D74-8A7E-F8A3F886FB24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3131DD90-6A18-4D74-8A7E-F8A3F886FB24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3131DD90-6A18-4D74-8A7E-F8A3F886FB24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +99,7 @@ Global
 		{ADE1D998-9C54-4918-A362-599C1E9EBEBB} = {C34713BE-3094-4175-A432-BE44508443BF}
 		{0FF36413-6928-4FCD-A7DF-8271870261BE} = {81A5026E-89A3-4C48-8E4C-A480E28F1691}
 		{1CD32594-E81B-433C-80F0-1A8F2F5FC758} = {81A5026E-89A3-4C48-8E4C-A480E28F1691}
+		{3131DD90-6A18-4D74-8A7E-F8A3F886FB24} = {60A6B6F4-56A0-4E28-BB37-F8B08CF4A7AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EDB7C510-9022-4ED2-8B66-B5ABB1CD8019}
