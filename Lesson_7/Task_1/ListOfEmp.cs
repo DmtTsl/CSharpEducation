@@ -63,10 +63,7 @@ namespace Lesson_7
             
         }
         
-        public int Count()
-        {
-            return employees.Count();
-        }
+       
 
 
         /// <summary>
