@@ -17,17 +17,28 @@ namespace Lesson_7
         public DateTime DateOfBirth { get; set; }
         public string PlaceOfBirth { get; set; }
 
-        public Employee(string[] args)
+        //public Employee(string[] args)
+        //{
+        //    this.ID = int.Parse(args[0]);
+        //    this.Now = Convert.ToDateTime(args[1]);
+        //    this.Name = args[2];
+        //    this.Age = int.Parse(args[3]);
+        //    this.Height = int.Parse(args[4]);
+        //    this.DateOfBirth = Convert.ToDateTime(args[5]);
+        //    this.PlaceOfBirth = args[6];
+        //}
+
+        public Employee(int id, DateTime now, string name, int age, int height, DateTime dateOfBirth, string placeOfBirth)
         {
-            this.ID = int.Parse(args[0]);
-            this.Now = Convert.ToDateTime(args[1]);
-            this.Name = args[2];
-            this.Age = int.Parse(args[3]);
-            this.Height = int.Parse(args[4]);
-            this.DateOfBirth = Convert.ToDateTime(args[5]);
-            this.PlaceOfBirth = args[6];
+            this.ID = id;
+            this.Now = now;
+            this.Name = name;
+            this.Age = age;
+            this.Height = height;
+            this.DateOfBirth = dateOfBirth;
+            this.PlaceOfBirth = placeOfBirth;
         }
-        
+
         /// <summary>
         /// Формирует строку для записи в файл
         /// </summary>

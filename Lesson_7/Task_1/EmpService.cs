@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Lesson_7
 {
-    struct Actions
+    struct EmpService
         
     {/// <summary>
     /// Проверка на возможность преобразования в Int32
@@ -34,7 +34,7 @@ namespace Lesson_7
         /// </summary>
         /// <returns>путь к файлу</returns>
         /// 
-        public static string FileSelection()
+        private static string FileSelection()
         {
             string fileName = string.Empty;
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -49,7 +49,7 @@ namespace Lesson_7
         /// </summary>
         /// <param name="fileNm">имя файла, который будет создан</param>
         /// <returns>путь к файлу</returns>
-        static string FileSelection(string fileNm)
+        private static string FileSelection(string fileNm)
         {
 
             string dirName = string.Empty;
@@ -70,6 +70,11 @@ namespace Lesson_7
             string[] lines = File.ReadAllLines(fileName);
             return lines;
         }
+
+       
+
+
+        
 
         /// <summary>
         /// Запись строк данных в файл
@@ -140,9 +145,7 @@ namespace Lesson_7
         }
 
 
-        //Console.WriteLine("Выберите действие:\n1 - Вывести запись на экран\n2 - Добавить новую запись\n3 - Удалить запись\n" +
-         //       "4 - Редактировать запись\n5 - Выбрать диапазон дат для загрузки записей\n6 - Отсортировать по дате");
-
+        
         /// <summary>
         /// Позволяет выбрать существующий файл или создать новый
         /// </summary>

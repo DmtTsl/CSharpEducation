@@ -6,42 +6,45 @@ using System.Threading.Tasks;
 
 namespace Lesson_7
 {
-    struct ListOfEmp
+    struct EmpRepository
     {
         private Employee[] employees;
 
-        public ListOfEmp (string[] lines)
+        private int length;
+        public EmpRepository(string[] lines)
         {
-            int index = lines.Length;
+            length = lines.Length;
             employees = new Employee[lines.Length];
             for (int i = 0; i < lines.Length; i++)
             {
-                employees[i] = new Employee(lines[i].Split('#'));
+                string[] args = lines[i].Split('#');
+
+                employees[i] = new Employee(int.Parse(args[0]), Convert.ToDateTime(args[1]), args[2], int.Parse(args[3]), int.Parse(args[4]), Convert.ToDateTime(args[5]), args[6]);
 
             }
-
+            
         }
 
-        public Employee this [int index]
-            {
+        public Employee this[int index]
+        {
             get => employees[index];
             set => employees[index] = value;
-            }
+        }
 
 
 
-       /// <summary>
-       /// Вывод списка сотрудников на экран
-       /// 0 - весь список
-       /// ID сотрудника - данные сотрудника с указанным ID
-       /// </summary>
-       /// <param name="index">0 или ID сотрудника</param>
-        public void Show(int index)
+        /// <summary>
+        /// Вывод списка сотрудников на экран
+        /// 0 - весь список
+        /// ID сотрудника - данные сотрудника с указанным ID
+        /// </summary>
+        /// <param name="index">0 или ID сотрудника</param>
+        public void GetAllOrByID(int index)
         {
-            Console.WriteLine(Actions.Title());
+            Console.WriteLine(EmpService.Title());
             if (index == 0)
             {
-                for (int i = 0; i < employees.Length; i++)
+                for (int i = 0; i < length; i++)
                 {
                     
                     Console.WriteLine(employees[i].DataToShow());
@@ -49,7 +52,7 @@ namespace Lesson_7
             }
             else
             {
-                for (int i = 0; i < employees.Length; i++)
+                for (int i = 0; i < length; i++)
                 {
                     if (index == employees[i].ID)
                     {
@@ -73,27 +76,30 @@ namespace Lesson_7
         /// Добавляет в массив employees данные нового сотрудника и перезаписывает файл с новыми данными
         /// </summary>
         /// <param name="fileName"></param>
-        public void Add(string fileName)
+        public void Create(string fileName)
         {
-            Array.Resize(ref employees, employees.Length + 1);
-            employees[employees.Length - 1] = new Employee(NewEmpData());
-            Actions.Save(fileName, ArrayToWrite());
+            if(employees.Length == length) Array.Resize(ref employees, employees.Length + 100);
+            length++;
+            string[] args = NewEmpData();
+            employees[length-1] = new Employee(int.Parse(args[0]), Convert.ToDateTime(args[1]), args[2], int.Parse(args[3]), int.Parse(args[4]), Convert.ToDateTime(args[5]), args[6]);
+            EmpService.Save(fileName, ArrayToWrite());
         }
 
         /// <summary>
         /// Правка записи с выбранным ID
         /// </summary>
         /// <param name="fileName"></param>
-        public void Edit(string fileName)
+        public void Update(string fileName)
         {
             Console.WriteLine("Введите ID сотрудника для изменения данных");
-            int index = Actions.TryParse();
-            for (int i = 0; i < employees.Length; i++)
+            int index = EmpService.TryParse();
+            for (int i = 0; i < length; i++)
             {
                 if (index == employees[i].ID)
                 {
-                    employees[i] = new Employee(NewEmpData());
-                    Actions.Save(fileName, ArrayToWrite());
+                    string[] args = NewEmpDataEdit(i);
+                    employees[i] = new Employee(int.Parse(args[0]), Convert.ToDateTime(args[1]), args[2], int.Parse(args[3]), int.Parse(args[4]), Convert.ToDateTime(args[5]), args[6]);
+                    EmpService.Save(fileName, ArrayToWrite());
                     return;
                 }
 
@@ -105,15 +111,15 @@ namespace Lesson_7
         /// Удаление записи с выбранным ID
         /// </summary>
         /// <param name="fileName"></param>
-        public void Erase(string fileName)
+        public void Delete(string fileName)
         {
-            Console.WriteLine("Введите ID сотрудника для уудаления данных");
-            int index = Actions.TryParse();
+            Console.WriteLine("Введите ID сотрудника для удаления данных");
+            int index = EmpService.TryParse();
             int j = 0;
-            Employee[] employeesTemp = new Employee[employees.Length - 1];
+            Employee[] employeesTemp = new Employee[length-1];
             try
             {
-                for (int i = 0; i < employees.Length; i++)
+                for (int i = 0; i < length; i++)
                 {
                     if (index != employees[i].ID)
                     {
@@ -123,8 +129,9 @@ namespace Lesson_7
                     }
 
                 }
+                length--;
                 employees = employeesTemp;
-                Actions.Save(fileName, ArrayToWrite());
+                EmpService.Save(fileName, ArrayToWrite());
             }
             catch
             {
@@ -138,15 +145,15 @@ namespace Lesson_7
         /// </summary>
         public void DateSorting()
         {
-            DateTime[] now = new DateTime[employees.Length];
+            DateTime[] now = new DateTime[length];
 
-            for (int i = 0; i < employees.Length; i++)
+            for (int i = 0; i < length; i++)
             {
 
                 now[i] = employees[i].Now;
             }
             Console.WriteLine("1 - вывести по возрастанию дат\n2 - вывести по убыванию дат");
-            int choice = Actions.ChoiceOf2();
+            int choice = EmpService.ChoiceOf2();
             switch (choice)
             {
                 case 1:
@@ -158,8 +165,8 @@ namespace Lesson_7
                     break;
             }
             
-            Console.WriteLine(Actions.Title());
-            for (int i = 0; i < employees.Length; i++)
+            Console.WriteLine(EmpService.Title());
+            for (int i = 0; i < length; i++)
             {
 
                 Console.WriteLine(employees[i].DataToShow());
@@ -173,21 +180,21 @@ namespace Lesson_7
         public void ShowDates()
         {
             Console.WriteLine("Введите дату начала списка\nГод");
-            int year = Actions.TryParse();
+            int year = EmpService.TryParse();
             Console.WriteLine("Месяц");
-            int month = Actions.TryParse();
+            int month = EmpService.TryParse();
             Console.WriteLine("День");
-            int day = Actions.TryParse();
+            int day = EmpService.TryParse();
             DateTime start = new DateTime(year, month, day);
             Console.WriteLine("Введите дату конца списка\nГод");
-            year = Actions.TryParse();
+            year = EmpService.TryParse();
             Console.WriteLine("Месяц");
-            month = Actions.TryParse();
+            month = EmpService.TryParse();
             Console.WriteLine("День");
-            day = Actions.TryParse();
+            day = EmpService.TryParse();
             DateTime finish = new DateTime(year, month, day);
 
-            for (int i = 0; i < employees.Length; i++)
+            for (int i = 0; i < length; i++)
             {
                 if (start <= employees[i].Now && employees[i].Now <= finish)
                 {
@@ -200,6 +207,32 @@ namespace Lesson_7
         }
 
 
+        public string[] NewEmpDataEdit(int i)
+        {
+            string[] newEmpData = new string[7];
+            
+            newEmpData[0] = employees[i].ID.ToString();
+            Console.WriteLine("Введите ФИО сотрудника");
+            newEmpData[2] = Console.ReadLine();
+            Console.WriteLine("Введите возраст сотрудника");
+            newEmpData[3] = EmpService.TryParse().ToString();
+            Console.WriteLine("Введите рост сотрудника");
+            newEmpData[4] = EmpService.TryParse().ToString();
+            Console.WriteLine("Введите дату рождения сотрудника\nГод");
+            int year = EmpService.TryParse();
+            Console.WriteLine("Месяц");
+            int month = EmpService.TryParse();
+            Console.WriteLine("День");
+            int day = EmpService.TryParse();
+            DateTime db = new DateTime(year, month, day);
+            newEmpData[5] = db.ToString();
+            Console.WriteLine("Введите место рождения сотрудника");
+            newEmpData[6] = Console.ReadLine();
+            newEmpData[1] = DateTime.Now.ToString();
+
+            return newEmpData;
+
+        }
 
 
         public string[] NewEmpData()
@@ -210,15 +243,15 @@ namespace Lesson_7
             Console.WriteLine("Введите ФИО сотрудника");
             newEmpData[2] = Console.ReadLine();
             Console.WriteLine("Введите возраст сотрудника");
-            newEmpData[3] = Actions.TryParse().ToString();
+            newEmpData[3] = EmpService.TryParse().ToString();
             Console.WriteLine("Введите рост сотрудника");
-            newEmpData[4] = Actions.TryParse().ToString();
+            newEmpData[4] = EmpService.TryParse().ToString();
             Console.WriteLine("Введите дату рождения сотрудника\nГод");
-            int year = Actions.TryParse();
+            int year = EmpService.TryParse();
             Console.WriteLine("Месяц");
-            int month = Actions.TryParse();
+            int month = EmpService.TryParse();
             Console.WriteLine("День");
-            int day = Actions.TryParse();
+            int day = EmpService.TryParse();
             DateTime db = new DateTime(year, month, day);
             newEmpData[5] = db.ToString();
             Console.WriteLine("Введите место рождения сотрудника");
@@ -232,7 +265,7 @@ namespace Lesson_7
         private string GetID()
         {
             start:
-            int _ID = Actions.TryParse();
+            int _ID = EmpService.TryParse();
             for(int i = 0; i < employees.Length; i++)
             {
                 if(_ID == employees[i].ID)
@@ -251,7 +284,7 @@ namespace Lesson_7
         /// <returns></returns>
         public string[] ArrayToWrite()
         {
-            string[] lines = new string[employees.Length];
+            string[] lines = new string[length];
             for (int i = 0; i< lines.Length; i++)
             {
                 lines[i] = employees[i].DataToWrite();

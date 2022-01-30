@@ -45,9 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions.cs" />
+    <Compile Include="EmpService.cs" />
     <Compile Include="Employee.cs" />
-    <Compile Include="ListOfEmp.cs" />
+    <Compile Include="EmpRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

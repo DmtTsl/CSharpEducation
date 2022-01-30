@@ -19,20 +19,20 @@ namespace Lesson_7
 
         start:
             Console.WriteLine("Выберите что делать\n1 - выбрать существующий файл\n2 - создать новый файл");
-            string fileName = Actions.New1OrExisting2File();
+            string fileName = EmpService.New1OrExisting2File();
 
         proceed:
-            string[] lines = Actions.ReadFile(fileName);
-            ListOfEmp employees = new ListOfEmp(lines);
+            string[] lines = EmpService.ReadFile(fileName);
+            EmpRepository employees = new EmpRepository(lines);
         
             if (employees.Count() == 0)
             {
                 Console.WriteLine("Выберите что делать\n1 - добавить новую запись\n2 - выбрать другой файл\n3 - закрыть программу");
-                int choice = Actions.ChoiceOf3();
+                int choice = EmpService.ChoiceOf3();
                 switch (choice)
                 {
                     case 1:
-                        employees.Add(fileName);
+                        employees.Create(fileName);
                         goto proceed;
 
                     case 2: goto start;
@@ -44,24 +44,24 @@ namespace Lesson_7
 
                 Console.WriteLine("Выберите что делать\n1 - прочитать запись\n2 - добавить новую запись\n3 - изменить запись\n" +
                     "4 - удалить запись\n5 - выбрать другой файл\n6 - закрыть программу");
-                int choice = Actions.ChoiceOf6();
+                int choice = EmpService.ChoiceOf6();
                 switch (choice)
                 {
                     case 1:
                         Console.WriteLine("Введите ID сотрудника для вывода записи или 0, чтобы вывести все записи");
-                        employees.Show(Actions.TryParse());
+                        employees.GetAllOrByID(EmpService.TryParse());
                         goto proceed;
 
                     case 2:
-                        employees.Add(fileName);
+                        employees.Create(fileName);
                         goto proceed;
 
                     case 3:
-                        employees.Edit(fileName);
+                        employees.Update(fileName);
                         goto proceed;
 
                     case 4:
-                        employees.Erase(fileName);
+                        employees.Delete(fileName);
                         goto proceed;
 
                     case 5: goto start;
@@ -74,24 +74,24 @@ namespace Lesson_7
                 Console.WriteLine("Выберите что делать\n1 - прочитать запись\n2 - добавить новую запись\n3 - изменить запись\n" +
                     "4 - удалить запись\n5 - вывод записей по диапазону дат\n6 - вывод всех записей, отсортированных по дате\n" +
                     "7 - выбрать другой файл\n8 - закрыть программу");
-                int choice = Actions.ChoiceOf8();
+                int choice = EmpService.ChoiceOf8();
                 switch (choice)
                 {
                     case 1:
                         Console.WriteLine("Введите ID сотрудника для вывода записи или 0, чтобы вывести все записи");
-                        employees.Show(Actions.TryParse());
+                        employees.GetAllOrByID(EmpService.TryParse());
                         goto proceed;
 
                     case 2:
-                        employees.Add(fileName);
+                        employees.Create(fileName);
                         goto proceed;
 
                     case 3:
-                        employees.Edit(fileName);
+                        employees.Update(fileName);
                         goto proceed;
 
                     case 4:
-                        employees.Erase(fileName);
+                        employees.Delete(fileName);
                         goto proceed;
 
                     case 5:
@@ -117,7 +117,10 @@ namespace Lesson_7
         
         }
         
-        
+        public static class Gain
+        {
+
+        }
         
         
        
