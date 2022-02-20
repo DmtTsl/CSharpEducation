@@ -52,12 +52,15 @@ namespace Lesson_9
                 {
                     case ".jpg":
                         await bot.SendPhotoAsync(chatID, new InputOnlineFile(stream, fName), "Получай");
+                        Console.WriteLine("Файл отправлен");
                         break;
                     case ".mp3":
                         await bot.SendAudioAsync(chatID, new InputOnlineFile(stream, fName), "Получай");
+                        Console.WriteLine("Файл отправлен");
                         break;
                     default:
                         await bot.SendDocumentAsync(chatID, new InputOnlineFile(stream, fName), "Получай");
+                        Console.WriteLine("Файл отправлен");
                         break;
                 }
                 
@@ -80,11 +83,9 @@ namespace Lesson_9
                     DownLoadVoice(e.Message.Voice.FileId, e.Message.Voice.FileUniqueId);
                     break;
                 case Telegram.Bot.Types.Enums.MessageType.Photo:
-                    int a = e.Message.Photo.Length;
-                    for (int i = 0; i < a; i++)
-                    {                        
-                        DownLoadPhoto(e.Message.Photo[i].FileId, e.Message.Photo[i].FileUniqueId, i);
-                    }
+                    int a = e.Message.Photo.Length;                                   
+                    DownLoadPhoto(e.Message.Photo[a-1].FileId, e.Message.Photo[a-1].FileUniqueId);
+                   
                     break;
                 default: goto reply;
 
@@ -152,10 +153,10 @@ namespace Lesson_9
 
             fs.Dispose();
         }
-        static async void DownLoadPhoto(string fileId, string path, int i)
+        static async void DownLoadPhoto(string fileId, string path)
         {
             var file = await bot.GetFileAsync(fileId);
-            FileStream fs = new FileStream(@"Download\_" + (i + 1) + path + ".jpg", FileMode.Create);
+            FileStream fs = new FileStream(@"Download\_" + path + ".jpg", FileMode.Create);
             await bot.DownloadFileAsync(file.FilePath, fs);
             fs.Close();
 
