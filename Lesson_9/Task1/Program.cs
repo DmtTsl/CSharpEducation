@@ -20,7 +20,7 @@ namespace Lesson_9
         static void Main(string[] args)
         {
             Directory.CreateDirectory("Download");
-            string token = "5176010751:AAErwSFu9GMyn8el8jL6sew3Wbxj-5DCLuQ";
+            string token = "///";
             
             bot = new TelegramBotClient(token);
 
