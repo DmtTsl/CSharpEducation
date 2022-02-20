@@ -34,7 +34,7 @@ namespace Lesson_9
 
         private static void CallbackQuery(object sender, Telegram.Bot.Args.CallbackQueryEventArgs e)
         {
-            Console.WriteLine($"{e.CallbackQuery.Message.Date} User ID: {e.CallbackQuery.Message.Chat.Id} Query Id: {e.CallbackQuery.Id}");
+            Console.WriteLine($"{e.CallbackQuery.Message.Date.AddHours(3)} User nick: {e.CallbackQuery.Message.Chat.FirstName} User ID: {e.CallbackQuery.Message.Chat.Id} Query Id: {e.CallbackQuery.Id}");
             
             List<string> files = new List<string>(Directory.GetFiles("Download"));
             
@@ -67,7 +67,7 @@ namespace Lesson_9
 
         private static void MessageListener(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
-            string text = $"{e.Message.Date} {e.Message.Chat.FirstName} {e.Message.Chat.Id} {e.Message.Text}";
+            string text = $"{e.Message.Date.AddHours(3)} {e.Message.Chat.FirstName} {e.Message.Chat.Id} {e.Message.Text}";
 
             Console.WriteLine($"{text}\nTypeMessage: {e.Message.Type}");
 
