@@ -59,6 +59,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task_4_Alt", "Lesson_8\Task
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example_841_SerializationXml", "..\..\..\Desktop\Исходники Модуль 8\Theme_08\Example_841_SerializationXml\Example_841_SerializationXml.csproj", "{D5D6238E-50A8-4124-ACC2-47D21237A41F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lesson_9", "Lesson_9", "{DC067E92-B8DC-45FD-81D2-D0FBDFD01856}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task_1", "Lesson_9\Task1\Task_1.csproj", "{AF5F3578-15EB-4DCF-906A-4A475C4BAA93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +145,10 @@ Global
 		{D5D6238E-50A8-4124-ACC2-47D21237A41F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5D6238E-50A8-4124-ACC2-47D21237A41F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5D6238E-50A8-4124-ACC2-47D21237A41F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF5F3578-15EB-4DCF-906A-4A475C4BAA93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF5F3578-15EB-4DCF-906A-4A475C4BAA93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF5F3578-15EB-4DCF-906A-4A475C4BAA93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF5F3578-15EB-4DCF-906A-4A475C4BAA93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +173,7 @@ Global
 		{1506F7A8-2D08-4C7C-97B3-4EDDB01848F2} = {3063B70B-0A83-4D28-85C1-9A576C023E5B}
 		{896B664A-B82C-45F5-8BA4-5B5F58A0CB73} = {3063B70B-0A83-4D28-85C1-9A576C023E5B}
 		{D5D6238E-50A8-4124-ACC2-47D21237A41F} = {3063B70B-0A83-4D28-85C1-9A576C023E5B}
+		{AF5F3578-15EB-4DCF-906A-4A475C4BAA93} = {DC067E92-B8DC-45FD-81D2-D0FBDFD01856}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EDB7C510-9022-4ED2-8B66-B5ABB1CD8019}
