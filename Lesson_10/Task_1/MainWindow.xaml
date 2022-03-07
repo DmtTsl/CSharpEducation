@@ -49,7 +49,7 @@
         <TabControl x:Name="tabControl" Grid.Column="0" Margin="5,5,2.5,5"/>
         <TextBox x:Name="textBox" Grid.Column="1" Margin="3,5,5,137" TextWrapping="Wrap"/>
         <Button x:Name="buttonSend" Grid.Column="1" Margin="3,281,4,52" Click="buttonSend_Click"/>
-        <TextBlock x:Name="textBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="29,260,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="10,239,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
         <Button x:Name="buttonSave" Grid.Column="1" Margin="3,328,4,5" Click="buttonSave_Click"/>
 
     </Grid>

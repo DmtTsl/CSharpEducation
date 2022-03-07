@@ -15,7 +15,7 @@ namespace Lesson_10
     {
         
         private readonly TelegramBotClient _botClient;
-        private string _token = "5176010751:AAFAjY5qpD4bg2XFdYzyTP4Mzwo8eHWLErM";
+        private string _token = "//";
 
         public ObservableCollection<User> users { get; set; }
         public User user { get; set; }

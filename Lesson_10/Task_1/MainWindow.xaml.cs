@@ -18,7 +18,6 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
-using Newtonsoft.Json;
 
 namespace Lesson_10
 {
@@ -114,10 +113,10 @@ namespace Lesson_10
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
 
-            using (JsonWriter jr = new JsonWriter())
-            {
-                JsonSerializer.Serialize<ObservableCollection<User>>(fs, bot.users);
-            }
+            //using (JsonWriter jr = new JsonWriter())
+            //{
+            //    JsonSerializer.Serialize<ObservableCollection<User>>(fs, bot.users);
+            //}
         }
     }
     
