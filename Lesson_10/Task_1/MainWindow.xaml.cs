@@ -35,12 +35,35 @@ namespace Lesson_10
             bot  = new TelegramService(this);
             bot.users.CollectionChanged += Users_CollectionChanged;
             bot.user.Messages.CollectionChanged += Messages_CollectionChanged;
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObservableCollection<User>));
-            using (FileStream fs = new FileStream("chat.xml", FileMode.OpenOrCreate))
+            if (File.Exists("chat.json"))
             {
-                bot.users = xmlSerializer.Deserialize(fs) as ObservableCollection<User>;
+                string json = File.ReadAllText("chat.json");
+                bot.users = JsonConvert.DeserializeObject<ObservableCollection<User>>(json);
+               
+                int index = 0;
+                foreach (User user in bot.users)
+                {
+                    ListBox listMessage = new ListBox()
+                    {
+                        Name = $"messageList{++index}",
+                        Margin = new Thickness(5, 5, 5, 5),
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        VerticalAlignment = VerticalAlignment.Stretch,
+                        ItemTemplate = (DataTemplate)TryFindResource("InputMessage"),
+                        ItemsSource = user.Messages
+
+                    };
+                    tabControl.Items.Add(new TabItem
+                    {
+                        Header = user.Name,
+
+                        Name = $"_{user.ID}",
+                        Content = listMessage,
+
+                    });
+                }
             }
-            tabControl.ItemsSource = bot.users;
+            
             
         }  
         
@@ -76,8 +99,8 @@ namespace Lesson_10
                     Header = bot.user.Name,                    
                     Name = $"_{bot.user.ID}",
                     Content = listMessage,
-                    //FontWeight = FontWeights.Bold,
-                    //Foreground = Brushes.Red
+                    FontWeight = FontWeights.Bold,
+                    Foreground = Brushes.Red
                 });
             }
             
@@ -85,14 +108,14 @@ namespace Lesson_10
 
         void Messages_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            textBlock.Text = "jbhmkhghjhg";
+            
         }
 
         private void buttonSend_Click(object sender, RoutedEventArgs e)
         {
             
             string text = textBox.Text;
-            
+            textBox.Text = "";
             TabItem tab = (TabItem)tabControl.SelectedItem;
             Message message = new Message(DateTime.Now, "Me", text);
             ListBox listMessage = (ListBox)tab.Content;
@@ -103,21 +126,24 @@ namespace Lesson_10
             {
                 if (u.ID == id)
                 {                    
-                    listMessage.ItemTemplate = (DataTemplate)TryFindResource("OutputMessage");
+                    
                     u.Messages.Add(message);
-                    //listMessage.ItemTemplate = (DataTemplate)TryFindResource("InputMessage");
+                    
                 }
             }
             
         }
 
-        private void buttonSave_Click(object sender, RoutedEventArgs e)
+        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            TabItem tab = (TabItem)tabControl.SelectedItem;
+            tab.FontWeight = FontWeights.Normal;
+            tab.Foreground = Brushes.Black;
+        }
 
-            using (JsonWriter jr = new JsonWriter())
-            {
-                JsonSerializer.Serialize<ObservableCollection<User>>(fs, bot.users);
-            }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            File.WriteAllText("chat.json", JsonConvert.SerializeObject(bot.users));
         }
     }
     
