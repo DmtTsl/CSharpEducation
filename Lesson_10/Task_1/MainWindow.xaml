@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Lesson_10"
         xmlns:databinding="clr-namespace:Lesson_10"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="800" Margin="0" ResizeMode="CanMinimize" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="400" Width="800" Margin="0" ResizeMode="CanResizeWithGrip" Closing="Window_Closing" WindowStartupLocation="CenterScreen" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="400" MinHeight="191" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
     <Window.Resources>
         <DataTemplate x:Key="InputMessage">
             <Border BorderBrush = "Black" Margin = "5" BorderThickness = "1" CornerRadius = "10" Cursor = "Hand" Background="#FF92C9F7" HorizontalAlignment="Left" >
@@ -42,13 +42,17 @@
         </DataTemplate>
     </Window.Resources>
     <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <TabControl x:Name="tabControl" Grid.Column="0" Margin="5,5,2.5,5" SelectionChanged="tabControl_SelectionChanged"/>
-        <TextBox x:Name="textBox" Grid.Column="1" Margin="3,5,5,46" TextWrapping="Wrap"/>
-        <Button x:Name="buttonSend" Grid.Column="1" Margin="3,330,4,5" Click="buttonSend_Click" Content="Send"/>
+        <TabControl x:Name="tabControl" Grid.Column="0" Margin="5,5,2,5" SelectionChanged="tabControl_SelectionChanged" Grid.RowSpan="2"/>
+        <TextBox x:Name="textBox" Grid.Column="1" Grid.Row="0" Margin="2.5,5,5,2.5" TextWrapping="Wrap"/>
+        <Button x:Name="buttonSend" Grid.Column="1" Margin="2.5,2.5,5,5" Click="buttonSend_Click" Content="Send" Grid.Row="1"/>
 
     </Grid>
 </Window>
