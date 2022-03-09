@@ -108,7 +108,7 @@ namespace Lesson_10
 
         void Messages_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            
+            textBox.Text = "New message";
         }
 
         private void buttonSend_Click(object sender, RoutedEventArgs e)
