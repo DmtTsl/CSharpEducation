@@ -33,8 +33,7 @@ namespace Lesson_10
         {
             InitializeComponent();
             bot  = new TelegramService(this);
-            bot.users.CollectionChanged += Users_CollectionChanged;
-            bot.user.Messages.CollectionChanged += Messages_CollectionChanged;
+            
             if (File.Exists("chat.json"))
             {
                 string json = File.ReadAllText("chat.json");
@@ -63,8 +62,9 @@ namespace Lesson_10
                     });
                 }
             }
-            
-            
+            bot.users.CollectionChanged += Users_CollectionChanged;
+            bot.user.Messages.CollectionChanged += Messages_CollectionChanged;
+
         }  
         
         void Users_CollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
@@ -113,24 +113,28 @@ namespace Lesson_10
 
         private void buttonSend_Click(object sender, RoutedEventArgs e)
         {
-            
-            string text = textBox.Text;
-            textBox.Text = "";
-            TabItem tab = (TabItem)tabControl.SelectedItem;
-            Message message = new Message(DateTime.Now, "Me", text);
-            ListBox listMessage = (ListBox)tab.Content;
-            long id = Convert.ToInt64(tab.Name.TrimStart('_'));
-            bot.SendMessage(text, id);
-
-            foreach (User u in bot.users)
+            if (tabControl.Items.Count != 0)
             {
-                if (u.ID == id)
-                {                    
-                    
-                    u.Messages.Add(message);
-                    
+                string text = textBox.Text;
+                textBox.Text = "";
+                TabItem tab = (TabItem)tabControl.SelectedItem;
+                Message message = new Message(DateTime.Now, "Me", text);
+                ListBox listMessage = (ListBox)tab.Content;
+                long id = Convert.ToInt64(tab.Name.TrimStart('_'));
+                bot.SendMessage(text, id);
+
+                foreach (User u in bot.users)
+                {
+                    if (u.ID == id)
+                    {
+
+                        u.Messages.Add(message);
+
+                    }
                 }
             }
+            else MessageBox.Show("Не выбрано ни одного чата");
+            
             
         }
 
