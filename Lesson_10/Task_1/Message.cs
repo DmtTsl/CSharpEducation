@@ -13,6 +13,14 @@ namespace Lesson_10
         public string Text { get; set; }
 
         public long ID { get; set; }
+
+        /// <summary>
+        /// Конструктор сообщения
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="name"></param>
+        /// <param name="text"></param>
+        /// <param name="id">значение по-умолчанию присваивается для исходящих сообщений</param>
         public Message(DateTime date, string name, string text, long id = 0)
         {
             Date = date;

@@ -23,7 +23,13 @@ using Newtonsoft.Json;
 namespace Lesson_10
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// в окне присутствует TabControl, который отображает чаты.
+    /// каждая вкладка - это чат с отдельным пользователем, содержит ListBox с сообщениями.
+    /// в каждом чате отображаются как входящие, так и исходящие сообщения.
+    /// справа TextBox для набора сообщения на отправку и кнопка для отправки сообщения.
+    /// сообщение отправляется пользователю, чья вкладка выбрана в момент отправки.
+    /// при запуске происходит импорт сохраненной истории сообщений.
+    /// при закрытии окна происходит сохранение всех чатов.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -34,6 +40,7 @@ namespace Lesson_10
             InitializeComponent();
             bot  = new TelegramService(this);
             
+            ///Отрисовываем историю сообщений, если она есть
             if (bot.users.Count > 0)
             {
                 
@@ -47,6 +54,7 @@ namespace Lesson_10
                         VerticalAlignment = VerticalAlignment.Stretch,
                         
                     };
+                    ///Проверка сообщений на входящее/исходящее и отрисовка шаблонов
                     foreach (Message message in user.Messages)
                     {
                         if (message.ID == 0)
@@ -68,6 +76,7 @@ namespace Lesson_10
                         }    
                         
                     }
+                    ///Заголовок вкладки - это имя пользователя. Свойство Name вкладки содержит ID пользователя
                     tabControl.Items.Add(new TabItem
                     {
                         Header = user.Name,
@@ -76,6 +85,7 @@ namespace Lesson_10
                         Content = listMessage,
 
                     });
+                    ///отслеживание изменения коллекции сообщений
                     user.Messages.CollectionChanged += Messages_CollectionChanged;
 
                 }
@@ -85,7 +95,7 @@ namespace Lesson_10
                 //    lb.SelectionChanged += listBox_SelectionChanged;
                 //}
             }                
-            
+            ///отслеживание изменений коллекции пользователей
             bot.users.CollectionChanged += Users_CollectionChanged;          
             
         }  
@@ -97,6 +107,7 @@ namespace Lesson_10
 
         void Users_CollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
         {
+            ///создаем экземпляр пользователя из последнего изменения
             List<User> newusers = e.NewItems.Cast<User>().ToList();
             User user = newusers.First();
                        
@@ -108,7 +119,8 @@ namespace Lesson_10
                 VerticalAlignment = VerticalAlignment.Stretch,
                                 
             };
-                        
+            
+            ///проверяем есть ли вкладки в Контроле. Если нет, то после создания выбираем ее.
             if (tabControl.Items.Count == 0)
             {
                 tabControl.Items.Add(new TabItem
@@ -136,12 +148,14 @@ namespace Lesson_10
 
         void Messages_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            
+            ///Создаем экземпляр сообщения из последнего изменения
             List<Message> newMessage = e.NewItems.Cast<Message>().ToList();
             Message message = newMessage.First();
+
             TabItem tabItem = new TabItem();
             ListBox listBox = new ListBox();
 
+            ///Проверяем не исходящее ли это сообщение
             if (message.ID == 0)
             {
                 tabItem = tabControl.SelectedItem as TabItem;
@@ -154,6 +168,8 @@ namespace Lesson_10
                 return;
             }
 
+            ///определяем вкладку, соответствующую пользователю, приславшему сообщение
+            ///добавляем сообщение в ListBox этой вкладки
             foreach (TabItem tab in tabControl.Items)
             {
                 if (Convert.ToInt64(tab.Name.Substring(7)) == message.ID)
@@ -169,6 +185,7 @@ namespace Lesson_10
                 DataContext = message
             });
 
+            ///Если вкладка не выбрана, то сигнализируем, что пришло сообщение
             if (tabItem.IsSelected != true)
             {
                 tabItem.FontWeight = FontWeights.Bold;
@@ -176,15 +193,22 @@ namespace Lesson_10
             }
         }
 
+        /// <summary>
+        /// действие по нажатию кнопки отправить
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSend_Click(object sender, RoutedEventArgs e)
         {        
             string text = textBox.Text;
 
+            ///при отсутсвии текста ничего не проиходит
             if (text == "")
             {
                 return;
             }
 
+            ///проверка нет ли попытки отправить сообщение, не имея адресата
             if (tabControl.Items.Count != 0)
             {               
                 textBox.Text = "";
@@ -206,14 +230,24 @@ namespace Lesson_10
             else MessageBox.Show("Не выбрано ни одного чата");               
         }
 
-
+        /// <summary>
+        /// обработка события выбора вкладки для удаления сигнализации о новом сообщении
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
             TabItem tab = (TabItem)tabControl.SelectedItem;
             tab.FontWeight = FontWeights.Normal;
             tab.Foreground = Brushes.Black;
-        }
+        }   
 
+        /// <summary>
+        /// обработка события закрытия окна
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             bot.SaveMessageHistory();

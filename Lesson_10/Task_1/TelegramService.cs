@@ -31,6 +31,7 @@ namespace Lesson_10
             _botClient = new TelegramBotClient(_token);
             users = new ObservableCollection<User>();
             
+            ///Проверяем есть ли сохраненная история сообщений
             if (File.Exists("chat.json"))
             {
                 string json = File.ReadAllText("chat.json");
@@ -54,6 +55,7 @@ namespace Lesson_10
                 Message message = new Message(e.Message.Date.ToLocalTime(), e.Message.Chat.FirstName, e.Message.Text, e.Message.Chat.Id);
                 user = new User(e.Message.Chat.Id, e.Message.Chat.FirstName);
                 
+                ///Проверяем есть ли пользователь в коллекции. Если нет, то добавляем
                 if (ContainUser(users, user, out int index))
                 {
                     users[index].Messages.Add(message);
@@ -68,16 +70,31 @@ namespace Lesson_10
             });
         }
 
+        /// <summary>
+        /// отправка сообщения пользователю
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <param name="Id"></param>
         public void SendMessage(string Text, long Id)
         {            
             _botClient.SendTextMessageAsync(Id, Text);
         }
 
+        /// <summary>
+        /// Сохранение истории сообщений
+        /// </summary>
         public void SaveMessageHistory()
         {
             File.WriteAllText("chat.json", JsonConvert.SerializeObject(users));
         }
         
+        /// <summary>
+        /// Проверяет есть ли пользователь в коллекции пользователей
+        /// </summary>
+        /// <param name="users">коллекция</param>
+        /// <param name="user">экземпляр пользователя от которого пришло сообщение</param>
+        /// <param name="index">индекс пользователя в коллекции, либо индекс добавления нового пользователя</param>
+        /// <returns></returns>
         private bool ContainUser(ObservableCollection<User> users, User user, out int index)
         {
             index = 0;
