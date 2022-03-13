@@ -12,13 +12,13 @@ namespace Lesson_10
         public string Name { get; set; }
         public string Text { get; set; }
 
-        public Message() { }
-       
-        public Message(DateTime date, string name, string text)
+        public long ID { get; set; }
+        public Message(DateTime date, string name, string text, long id = 0)
         {
             Date = date;
             Name = name;
             Text = text;
+            ID = id;
         }
 
     }

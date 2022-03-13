@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="800" Margin="0" ResizeMode="CanResizeWithGrip" Closing="Window_Closing" WindowStartupLocation="CenterScreen" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="400" MinHeight="191" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
     <Window.Resources>
-        <DataTemplate x:Key="InputMessage">
+        
+        <ControlTemplate TargetType="ListBoxItem" x:Key="Income">
             <Border BorderBrush = "Black" Margin = "5" BorderThickness = "1" CornerRadius = "10" Cursor = "Hand" Background="#FF92C9F7" HorizontalAlignment="Left" >
 
                 <StackPanel Margin = "2" >
@@ -22,9 +23,9 @@
                 </StackPanel>
 
             </Border>
-
-        </DataTemplate>
-        <DataTemplate x:Key="OutputMessage">
+        </ControlTemplate>
+        
+        <ControlTemplate TargetType="ListBoxItem" x:Key="Outgoing">
             <Border BorderBrush = "Black" Margin = "5" BorderThickness = "1" CornerRadius = "10" Cursor = "Hand" Background="#FF8CFFA1" HorizontalAlignment="Right" >
 
                 <StackPanel Margin = "2" >
@@ -38,8 +39,7 @@
                 </StackPanel>
 
             </Border>
-
-        </DataTemplate>
+        </ControlTemplate>       
     </Window.Resources>
     <Grid >
         <Grid.RowDefinitions>
@@ -50,9 +50,12 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <TabControl x:Name="tabControl" Grid.Column="0" Margin="5,5,2,5" SelectionChanged="tabControl_SelectionChanged" Grid.RowSpan="2"/>
+        
         <TextBox x:Name="textBox" Grid.Column="1" Grid.Row="0" Margin="2.5,5,5,2.5" TextWrapping="Wrap"/>
         <Button x:Name="buttonSend" Grid.Column="1" Margin="2.5,2.5,5,5" Click="buttonSend_Click" Content="Send" Grid.Row="1"/>
+        <TabControl x:Name="tabControl" Grid.RowSpan="2" Margin="5,5,2.5,5" SelectionChanged="tabControl_SelectionChanged"  >
+          
+        </TabControl>
 
     </Grid>
 </Window>

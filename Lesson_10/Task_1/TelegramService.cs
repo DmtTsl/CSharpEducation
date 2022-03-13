@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -18,19 +19,27 @@ namespace Lesson_10
         private string _token = "//";
 
         public ObservableCollection<User> users { get; set; }
+
         public User user { get; set; }
-        //public Dictionary<long, string> users { get; set; }
+       
         private MainWindow _mw;
+
         
         public TelegramService(MainWindow MW)
         {
             _mw = MW;
             _botClient = new TelegramBotClient(_token);
             users = new ObservableCollection<User>();
-            user = new User();
+            
+            if (File.Exists("chat.json"))
+            {
+                string json = File.ReadAllText("chat.json");
+                users = JsonConvert.DeserializeObject<ObservableCollection<User>>(json);
+            }
+            
             _botClient.OnMessage += MessageListener;
             _botClient.StartReceiving();
-
+            
         }
         
         /// <summary>
@@ -39,51 +48,49 @@ namespace Lesson_10
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void MessageListener(object sender, Telegram.Bot.Args.MessageEventArgs e)
-        {
-            
+        {            
             _mw.Dispatcher.Invoke(() =>
-            {
-                int index = 0;
-                bool newUser = true;
-                Message message = new Message(e.Message.Date, e.Message.Chat.FirstName, e.Message.Text);
+            {               
+                Message message = new Message(e.Message.Date.ToLocalTime(), e.Message.Chat.FirstName, e.Message.Text, e.Message.Chat.Id);
                 user = new User(e.Message.Chat.Id, e.Message.Chat.FirstName);
-                foreach(User u in users)
-                {
-                    
-                    if (u.ID == user.ID)
-                    {
-                        newUser = false;
-                        
-                        break;
-                    }
-                    index++;
-                }
-                if (newUser)
-                {
-                    users.Add(user);
-                    user.Messages.Add(message);
-                    
-                }
-                else
+                
+                if (ContainUser(users, user, out int index))
                 {
                     users[index].Messages.Add(message);
                 }
-                
-
-                
+                else
+                {                    
+                    users.Add(user);
+                    users[index].Messages.Add(message); 
+                    
+                }
+                 
             });
-
-
-
         }
+
         public void SendMessage(string Text, long Id)
-        {
-            
+        {            
             _botClient.SendTextMessageAsync(Id, Text);
         }
 
-
-       
+        public void SaveMessageHistory()
+        {
+            File.WriteAllText("chat.json", JsonConvert.SerializeObject(users));
+        }
+        
+        private bool ContainUser(ObservableCollection<User> users, User user, out int index)
+        {
+            index = 0;
+            foreach(User u in users)
+            {
+                if(u.ID == user.ID)
+                {
+                    return true;
+                }
+                index++;
+            }
+            return false;
+        }
        
     }
 }

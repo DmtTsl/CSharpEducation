@@ -13,18 +13,12 @@ namespace Lesson_10
         public string Name { get; set; }
 
         public ObservableCollection<Message> Messages { get; set; }
-        public User() 
-        {
-            Messages = new ObservableCollection<Message>();
-        }
+
         public User (long id, string name)
         {
             ID = id;
             Name = name;
             Messages = new ObservableCollection<Message>();
-        }
-
-
-        
+        }        
     }
 }
