@@ -12,17 +12,14 @@ namespace Lesson_8
     {
         [XmlAttribute]
         public string Name { get; set; }
-        public Address address = new Address();
-        public Phones phones = new Phones();
+        public Address Address { get; set; }
+        public Phones Phones { get; set; }
         public Person() { }
         public Person (string name, string street, int houseNum, int flatNum, string mobPhone, string flatPhone)
         {
             Name = name;
-            address.Street = street;
-            address.HouseNumber = houseNum;
-            address.FlatNumber = flatNum;
-            phones.MobilePhone = mobPhone;
-            phones.FlatPhone = flatPhone;
+            Address = new Address(street, houseNum, flatNum);
+            Phones = new Phones(mobPhone, flatPhone);
         }
 
         
