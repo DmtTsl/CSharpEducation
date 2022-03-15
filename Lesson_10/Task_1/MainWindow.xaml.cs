@@ -41,10 +41,10 @@ namespace Lesson_10
             bot  = new TelegramService(this);
             
             ///Отрисовываем историю сообщений, если она есть
-            if (bot.users.Count > 0)
+            if (bot.Users.Count > 0)
             {
                 
-                foreach (User user in bot.users)
+                foreach (User user in bot.Users)
                 {
                     ListBox listMessage = new ListBox()
                     {
@@ -96,7 +96,7 @@ namespace Lesson_10
                 //}
             }                
             ///отслеживание изменений коллекции пользователей
-            bot.users.CollectionChanged += Users_CollectionChanged;          
+            bot.Users.CollectionChanged += Users_CollectionChanged;          
             
         }  
         
@@ -143,7 +143,7 @@ namespace Lesson_10
                 });
             }
 
-            bot.user.Messages.CollectionChanged += Messages_CollectionChanged;
+            bot.User.Messages.CollectionChanged += Messages_CollectionChanged;
         }
 
         void Messages_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -219,7 +219,7 @@ namespace Lesson_10
                
                 bot.SendMessage(text, id);
 
-                foreach (User u in bot.users)
+                foreach (User u in bot.Users)
                 {
                     if (u.ID == id)
                     {

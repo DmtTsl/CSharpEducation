@@ -18,9 +18,9 @@ namespace Lesson_10
         private readonly TelegramBotClient _botClient;
         private string _token = "//";
 
-        public ObservableCollection<User> users { get; set; }
+        public ObservableCollection<User> Users { get; set; }
 
-        public User user { get; set; }
+        public User User { get; set; }
        
         private MainWindow _mw;
 
@@ -29,13 +29,13 @@ namespace Lesson_10
         {
             _mw = MW;
             _botClient = new TelegramBotClient(_token);
-            users = new ObservableCollection<User>();
+            Users = new ObservableCollection<User>();
             
             ///Проверяем есть ли сохраненная история сообщений
             if (File.Exists("chat.json"))
             {
                 string json = File.ReadAllText("chat.json");
-                users = JsonConvert.DeserializeObject<ObservableCollection<User>>(json);
+                Users = JsonConvert.DeserializeObject<ObservableCollection<User>>(json);
             }
             
             _botClient.OnMessage += MessageListener;
@@ -53,17 +53,17 @@ namespace Lesson_10
             _mw.Dispatcher.Invoke(() =>
             {               
                 Message message = new Message(e.Message.Date.ToLocalTime(), e.Message.Chat.FirstName, e.Message.Text, e.Message.Chat.Id);
-                user = new User(e.Message.Chat.Id, e.Message.Chat.FirstName);
+                User = new User(e.Message.Chat.Id, e.Message.Chat.FirstName);
                 
                 ///Проверяем есть ли пользователь в коллекции. Если нет, то добавляем
-                if (ContainUser(users, user, out int index))
+                if (ContainUser(User, out int index))
                 {
-                    users[index].Messages.Add(message);
+                    Users[index].Messages.Add(message);
                 }
                 else
                 {                    
-                    users.Add(user);
-                    users[index].Messages.Add(message); 
+                    Users.Add(User);
+                    Users[index].Messages.Add(message); 
                     
                 }
                  
@@ -85,7 +85,7 @@ namespace Lesson_10
         /// </summary>
         public void SaveMessageHistory()
         {
-            File.WriteAllText("chat.json", JsonConvert.SerializeObject(users));
+            File.WriteAllText("chat.json", JsonConvert.SerializeObject(Users));
         }
         
         /// <summary>
@@ -95,10 +95,10 @@ namespace Lesson_10
         /// <param name="user">экземпляр пользователя от которого пришло сообщение</param>
         /// <param name="index">индекс пользователя в коллекции, либо индекс добавления нового пользователя</param>
         /// <returns></returns>
-        private bool ContainUser(ObservableCollection<User> users, User user, out int index)
+        private bool ContainUser(User user, out int index)
         {
             index = 0;
-            foreach(User u in users)
+            foreach(User u in Users)
             {
                 if(u.ID == user.ID)
                 {
