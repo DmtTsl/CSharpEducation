@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lesson_11"
         mc:Ignorable="d"
-        Title="Работа с клиентами" Height="400" Width="800" BorderThickness="2,2,2,2" BorderBrush="#FF72CFFF" MinHeight="400" 
+        Title="Работа с клиентами" Height="500" Width="800" BorderThickness="2,2,2,2" BorderBrush="#FF72CFFF" MinHeight="497" 
         MinWidth="800" ScrollViewer.VerticalScrollBarVisibility="Disabled" WindowStartupLocation="CenterScreen" Foreground="Black" WindowStyle="SingleBorderWindow">
     <Window.Resources>
         <Style TargetType="Button">
@@ -20,7 +20,15 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
+        <DataTemplate x:Key="listItems">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding SecondName}"/>
+                <TextBlock Text=" "/>
+                <TextBlock Text="{Binding FirstName}"/>
+                <TextBlock Text=" "/>
+                <TextBlock Text="{Binding MiddleName}"/>
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
     <Grid Background="#FFD8D8D8" >
         <Grid.ColumnDefinitions>
@@ -30,14 +38,20 @@
 
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="listBoxClientList" Margin="10,10,10,10" Grid.Column="0" SelectionChanged="listBoxClientList_SelectionChanged"/>
-        <GridSplitter x:Name="gridSplitter" HorizontalAlignment="Stretch" Grid.Column="1" Background="#FF72CFFF" VerticalAlignment="Stretch" />
-       
-        
-        <StackPanel Grid.Column="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListBox x:Name="listBoxClientList" Margin="10,10,10,10" Grid.Column="0" Grid.RowSpan="2" SelectionChanged="listBoxClientList_SelectionChanged" 
+                 SelectedItem="{Binding SelectedClient, Mode=OneWayToSource}" SelectedIndex="{Binding SelectedClientIndex, Mode=OneWayToSource}" 
+                 ItemTemplate="{StaticResource listItems}" ItemsSource="{Binding Clients, Mode=OneWay}" ScrollViewer.CanContentScroll="True"/>
+        <GridSplitter x:Name="gridSplitter" HorizontalAlignment="Stretch" Grid.Column="1" Grid.RowSpan="2" Background="#FF72CFFF" VerticalAlignment="Stretch" />
+
+
+        <StackPanel Grid.Column="2" Margin="0,0,0,-3">
             <GroupBox x:Name="groupBoxClientInfo" Grid.Column="2" Header="Данные клиента" HorizontalContentAlignment="Stretch" 
-                  Margin="10,10,10,10" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Height="125" 
-                  VerticalAlignment="Top" >
+                  Margin="10,10,10,0" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Height="125" 
+                  VerticalAlignment="Top">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="140"/>
@@ -63,21 +77,21 @@
 
 
                     <TextBox x:Name="textBoxSecondName" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" 
-                         Margin="0,0,0,0" Grid.Column="1" Grid.Row="0" Text="{Binding ClientSecondName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                         Margin="0,0,0,0" Grid.Column="1" Grid.Row="0" Text="{Binding SecondName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <TextBox x:Name="textBoxFirstName" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
-                         Margin="0,0,0,0" Grid.Column="1" Grid.Row="1" Text="{Binding ClientFirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                         Margin="0,0,0,0" Grid.Column="1" Grid.Row="1" Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <TextBox x:Name="textBoxMiddleName" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
-                         Margin="0,0,0,0" Grid.Column="1" Grid.Row="2" Text="{Binding ClientMiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                         Margin="0,0,0,0" Grid.Column="1" Grid.Row="2" Text="{Binding MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <TextBox x:Name="textBoxPassNumber" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
-                         Margin="0,0,0,0" Grid.Column="1" Grid.Row="3" Text="{Binding ClientPassNumber, StringFormat={}{0:#### ######}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                         TextChanged="textBoxPassNumber_TextChanged" MaxLength="10" MaxLines="1"/>
+                         Margin="0,0,0,0" Grid.Column="1" Grid.Row="3" Text="{Binding PassNumber, StringFormat={}{0:#### ######}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         MaxLength="10" MaxLines="1" />
 
                     <TextBox x:Name="textBoxPhoneNumber" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
-                             Margin="0,0,0,0" Grid.Column="1" Grid.Row="4" Text="{Binding ClientPhoneNumber, StringFormat={}{0:+7(###)###-##-##}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                             MaxLength="10" MaxLines="1"/>
+                             Margin="0,0,0,0" Grid.Column="1" Grid.Row="4" Text="{Binding PhoneNumber, StringFormat={}{0:+7(###)###-##-##}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             MaxLength="10" MaxLines="1" OpacityMask="Black" Visibility="Visible"/>
 
                 </Grid>
             </GroupBox>
@@ -86,13 +100,45 @@
             </Button>
             <Button x:Name="buttonAddClient" Grid.Column="2" Content="Добавить нового клиента" Margin="10,10,10,0" VerticalAlignment="Top" 
             Foreground="#FF3C5EC7" FontStyle="Normal" FontStretch="Medium" FontWeight="Medium" Click="buttonAddClient_Click"/>
-            <Button x:Name="buttonSaveClient" Grid.Column="2" Content="Сохранить изменения" Margin="10,10,10,0" VerticalAlignment="Top" 
+            <Button x:Name="buttonSaveClient" Grid.Column="2" Content="Сохранить изменения Клиента" Margin="10,10,10,0" VerticalAlignment="Top" 
             Foreground="#FF3C5EC7" FontStyle="Normal" FontStretch="Medium" FontWeight="Medium" Click="buttonSaveClient_Click"/>
-            <Button x:Name="buttonHistory" Grid.Column="2" Content="Показать историю изменений" Margin="10,10,10,0" VerticalAlignment="Top" 
-                Foreground="#FF3C5EC7" FontStyle="Normal" FontStretch="Medium" FontWeight="Medium">
-            </Button>
         </StackPanel>
-        
+        <GroupBox x:Name="groupBoxClientLog" Grid.Column="2" Header="История изменения клиента" HorizontalContentAlignment="Stretch" 
+                      Margin="10,240,10,10" VerticalContentAlignment="Stretch" Padding="0,0,0,0" DataContext="{Binding SelectedClient}" Grid.RowSpan="2" VerticalAlignment="Stretch" >
+
+            <ListBox x:Name="listBox" ItemsSource="{Binding Logs}" Focusable="False" Margin="0,5,0,5" ScrollViewer.CanContentScroll="True" Background="#FFD8D8D8" 
+                     IsTextSearchEnabled="False" VerticalContentAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Дата-Время" Grid.Column="0" Grid.Row="0"/>
+                            <TextBlock Text="Кем изменено" Grid.Column="0" Grid.Row="1"/>
+                            <TextBlock Text="Тип изменения" Grid.Column="0" Grid.Row="2"/>
+                            <TextBlock Text="Что изменено" Grid.Column="0" Grid.Row="3"/>
+                            <TextBlock Text="{Binding ChangeDateTime}" Grid.Column="1" Grid.Row="0"/>
+                            <TextBlock Text="{Binding WhoChanged}" Grid.Column="1" Grid.Row="1"/>
+                            <TextBlock Text="{Binding TypeOfChanges}" Grid.Column="1" Grid.Row="2"/>
+                            <TextBlock Text="{Binding WhatChanged}" TextWrapping="Wrap" Grid.Column="1" Grid.Row="3"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </GroupBox>
+
+
+
+
 
 
     </Grid>

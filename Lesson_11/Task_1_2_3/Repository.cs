@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -12,7 +14,10 @@ namespace Lesson_11
     public class Repository
     {
         public ObservableCollection<Client> Clients { get; set; }
+
+        public Client SelectedClient { get; set; }
         
+        public int SelectedClientIndex { get; set; }
         
         public Repository()
         {            
@@ -33,7 +38,7 @@ namespace Lesson_11
         {
             File.WriteAllText("clients.json", JsonConvert.SerializeObject(Clients));
         }
+        
 
-
-}
+    }
 }

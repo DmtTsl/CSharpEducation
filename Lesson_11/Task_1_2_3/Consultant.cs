@@ -9,32 +9,29 @@ using System.Threading.Tasks;
 
 namespace Lesson_11
 {
+
     public class Consultant:Employer, IConsultantChange
     {
-       
+        public string PassNumber { get; set; }
         public Consultant()
         {
             LoginPassword = new Dictionary<string, string>();
             GetSavedLoginPass();
         }
 
-        public Consultant(Client client)
-        {
-            ClientFirstName = client.FirstName;
-            ClientSecondName = client.SecondName;
-            ClientMiddleName = client.MiddleName;
-            ClientPassNumber = client.PassNumber.Replace(client.PassNumber, new string('*', client.PassNumber.Length - 1));
-            ClientPhoneNumber = client.PhoneNumber;
-
-        }
+        
         public override void GetClientInformation (Client client)
         {
-            ClientFirstName = client.FirstName;
-            ClientSecondName = client.SecondName;
-            ClientMiddleName = client.MiddleName;
-            ClientPassNumber = client.PassNumber.Replace(client.PassNumber, new string('*', client.PassNumber.Length - 1));
-            ClientPhoneNumber = client.PhoneNumber;
+            PassNumber = client.PassNumber;
+            string clientPassNumber = client.PassNumber.Replace(client.PassNumber, new string('*', client.PassNumber.Length - 1));
+            Client = new Client(client.SecondName, client.FirstName, client.MiddleName, clientPassNumber, client.PhoneNumber);
+            Client.Logs = client.Logs;
+        }
 
+        public override Client SetClientInformation()
+        {
+            Client.PassNumber = PassNumber;
+            return Client;
         }
         public override void GetSavedLoginPass()
         {

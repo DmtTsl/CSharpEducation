@@ -20,14 +20,10 @@ namespace Lesson_11
 
         public override void GetClientInformation(Client client)
         {
-            ClientFirstName = client.FirstName;
-            ClientSecondName = client.SecondName;
-            ClientMiddleName = client.MiddleName;
-            ClientPassNumber = client.PassNumber;
-            ClientPhoneNumber = client.PhoneNumber;
-
+            Client = new Client(client.SecondName, client.FirstName, client.MiddleName, client.PassNumber, client.PhoneNumber);
+            Client.Logs = client.Logs;
         }
-       
+
         public override void GetSavedLoginPass()
         {
             if (File.Exists("managerLoginPassword.json"))
@@ -35,6 +31,12 @@ namespace Lesson_11
                 string jsonLoginPassword = File.ReadAllText("managerLoginPassword.json");
                 LoginPassword = JsonConvert.DeserializeObject<Dictionary<string,string>>(jsonLoginPassword);
             }
+        }
+
+        public override Client SetClientInformation()
+        {
+            return Client;
+            
         }
 
         public override void SaveLoginPass()
