@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.Specialized;
+using System.Collections.ObjectModel;
 
 namespace Lesson_11
 {
@@ -57,7 +58,6 @@ namespace Lesson_11
             
             if (login.Content is Consultant)
             {
-                MessageBox.Show("Cons");
                 this.Title = "Работа с клиентами: Консультант";
                 Employer = login.Content as Consultant;
                 Employer.Name = "Консультант";
@@ -72,7 +72,6 @@ namespace Lesson_11
             }
             else
             {
-                MessageBox.Show("Manag");
                 this.Title = "Работа с клиентами: Менеджер";
                 Employer = login.Content as Manager;
                 Employer.Name = "Менеджер";
@@ -102,67 +101,26 @@ namespace Lesson_11
             {                
                 case NotifyCollectionChangedAction.Add:
                     Client Client = (Client)e.NewItems[0];
-
-                    if (Client.MiddleName == "" && Client.PhoneNumber == "")
-                    {
-                        whatChanged = "Фамилия\nИмя\nНомер паспорта";
-                    }
-                    else if (Client.MiddleName == "")
-                    {
-                        whatChanged = "Фамилия\nИмя\nНомер паспорта\nНомер телефона";
-                    }
-                    else if (Client.PhoneNumber == "")
-                    {
-                        whatChanged = "Фамилия\nИмя\nОтчество\nНомер паспорта";
-                    }                    
-                    else
-                    {
-                        whatChanged = "Фамилия\nИмя\nОтчество\nНомер паспорта\nНомер телефона";
-                    }
+                    Employer.GetAllChangesAddClient(Client);                    
+                    whatChanged = String.Join("\n", Employer.Changes);
                     typeOfChange = "Добавление";
                     whoChanged = "Менеджер";
                     _repository.Clients[e.NewStartingIndex].Logs.Add(new Client.Log(date, whatChanged, typeOfChange, whoChanged));
+                    listBoxClientList.SelectedIndex = e.NewStartingIndex;
                     break;
                 case NotifyCollectionChangedAction.Replace:                    
-                    Client oldData = (Client)e.OldItems[0];
-                    Client newData = (Client)e.NewItems[0];                    
-                    if (oldData == newData) break;
-                    List<string> changes = new List<string>();
-                    if(newData.SecondName != oldData.SecondName)
-                    {
-                        changes.Add("Фамилия");
-                    }
-                    if (newData.FirstName != oldData.FirstName)
-                    {
-                        changes.Add("Имя");
-                    }
-                    if (newData.MiddleName != oldData.MiddleName)
-                    {
-                        changes.Add("Отчество");
-                    }
-                    if (newData.PassNumber != oldData.PassNumber)
-                    {
-                        changes.Add("Номер паспорта");
-                    }
-                    if (newData.PhoneNumber != oldData.PhoneNumber)
-                    {
-                        changes.Add("Номер телефона");
-                    }
+                    Client oldClient = (Client)e.OldItems[0];
+                    Client newClient = (Client)e.NewItems[0];
+                    if (oldClient == newClient) break;
+                    Employer.GetAllChangesChangeClient(oldClient,newClient);
+                                                             
+                    whatChanged = String.Join("\n", Employer.Changes);                       
+                    whoChanged = Employer.Name;
                    
-                    if (Employer is Consultant)
-                    {                        
-                        whatChanged = String.Join("\n", changes);                       
-                        whoChanged = "Консультант";
-                    }
-                    else
-                    {
-                        whatChanged = String.Join("\n", changes);                        
-                        whoChanged = "Менеджер";
-                    }
                     typeOfChange = "Изменение";
                     
-                    _repository.Clients[e.NewStartingIndex].Logs.Add(new Client.Log(date, whatChanged, typeOfChange, whoChanged));
-                    MessageBox.Show(_repository.Clients[e.NewStartingIndex].Logs.Count.ToString());
+                    _repository.Clients[e.NewStartingIndex].Logs.Add(new Client.Log(date, whatChanged, typeOfChange, whoChanged));                    
+                    listBoxClientList.SelectedIndex = e.NewStartingIndex;
                     break;
                     
             }
@@ -184,11 +142,7 @@ namespace Lesson_11
             
         }
 
-        private void textBoxPassNumber_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
-        }
-
+        
         private void listBoxClientList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_repository.SelectedClient == null) return;            
@@ -198,15 +152,20 @@ namespace Lesson_11
 
         private void buttonAddClient_Click(object sender, RoutedEventArgs e)
         {
-            Client client = new Client(textBoxSecondName.Text, textBoxFirstName.Text, textBoxMiddleName.Text, textBoxPassNumber.Text, textBoxPhoneNumber.Text);
+            if (Employer.Client == null)
+            {
+                Employer.Client = new Client(textBoxSecondName.Text, textBoxFirstName.Text, textBoxMiddleName.Text, textBoxPassNumber.Text, textBoxPhoneNumber.Text);
+            }
+            Employer.Client.Logs = new ObservableCollection<Client.Log>();
             
-            if (client.SecondName == "" || client.FirstName == "" || client.PassNumber == "")
+            if (Employer.Client.SecondName == "" || Employer.Client.FirstName == "" || Employer.Client.PassNumber == "")
             {
                 MessageBox.Show("Не введены все данные клиента. Фамилия, имя и номер паспорта обязательны для введения");
             }
             else
             {
-                _repository.Clients.Add(client);
+                _repository.Clients.Add(Employer.Client);
+
                 _repository.SaveClients();
             }
             

@@ -74,8 +74,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Consultant.cs" />
     <Compile Include="Employer.cs" />
-    <Compile Include="IConsultantChange.cs" />
-    <Compile Include="IManagerChange.cs" />
+    <Compile Include="IChange.cs" />
     <Compile Include="LogIn.xaml.cs">
       <DependentUpon>LogIn.xaml</DependentUpon>
     </Compile>

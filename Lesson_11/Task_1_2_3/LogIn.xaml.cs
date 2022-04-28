@@ -24,6 +24,7 @@ namespace Lesson_11
         public LogIn()
         {
             InitializeComponent();
+            
         }
 
 
@@ -50,9 +51,9 @@ namespace Lesson_11
                 if (employer.LoginPassword.TryGetValue(_login, out string value))
                 {
                     if (value == _password)
-                    {
+                    {                        
                         this.Content = employer;
-                        DialogResult = true;
+                            DialogResult = true;
                     }
                     else MessageBox.Show("Неверный пароль");
                 }

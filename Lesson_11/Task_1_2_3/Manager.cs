@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Lesson_11
 {
-    public class Manager:Employer, IManagerChange
+    public class Manager:Employer
     {
         
         public Manager()
@@ -42,6 +42,51 @@ namespace Lesson_11
         public override void SaveLoginPass()
         {
             File.WriteAllText("managerLoginPassword.json", JsonConvert.SerializeObject(LoginPassword));
+        }
+
+        public override void GetAllChangesAddClient(Client client)
+        {
+            Changes = new List<string>();
+
+                Changes.Add("Фамилия");            
+                Changes.Add("Имя");
+            
+            if (client.MiddleName != "")
+            {
+                Changes.Add("Отчество");
+            }
+
+                Changes.Add("Номер паспорта");
+           
+            if (client.PhoneNumber != "")
+            {
+                Changes.Add("Номер телефона");
+            }
+        }
+
+        public override void GetAllChangesChangeClient(Client oldClient, Client newClient)
+        {
+            Changes = new List<string>();
+            if (oldClient.SecondName != newClient.SecondName)
+            {
+                Changes.Add("Фамилия");
+            }
+            if (oldClient.FirstName != newClient.FirstName)
+            {
+                Changes.Add("Имя");
+            }
+            if (oldClient.MiddleName != newClient.MiddleName)
+            {
+                Changes.Add("Отчество");
+            }
+            if (oldClient.PassNumber != newClient.PassNumber)
+            {
+                Changes.Add("Номер паспорта");
+            }
+            if (oldClient.PhoneNumber != newClient.PhoneNumber)
+            {
+                Changes.Add("Номер телефона");
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Lesson_11
 {
 
-    public class Consultant:Employer, IConsultantChange
+    public class Consultant : Employer
     {
         public string PassNumber { get; set; }
         public Consultant()
@@ -19,8 +19,8 @@ namespace Lesson_11
             GetSavedLoginPass();
         }
 
-        
-        public override void GetClientInformation (Client client)
+
+        public override void GetClientInformation(Client client)
         {
             PassNumber = client.PassNumber;
             string clientPassNumber = client.PassNumber.Replace(client.PassNumber, new string('*', client.PassNumber.Length - 1));
@@ -45,6 +45,24 @@ namespace Lesson_11
         public override void SaveLoginPass()
         {
             File.WriteAllText("consultantLoginPassword.json", JsonConvert.SerializeObject(LoginPassword));
+        }
+
+
+        public override void GetAllChangesAddClient(Client client)
+        {
+
+        }
+
+        public override void GetAllChangesChangeClient(Client oldClient, Client newClient)
+        {
+
+            if (oldClient.PhoneNumber != newClient.PhoneNumber)
+            {
+                string whatChanged = "Номер телефона";
+                Changes = new List<string> { whatChanged };
+            }
+
+
         }
     }
 }
