@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Lesson_11
+namespace Task_1_2_3_MVVM
 {
     /// <summary>
-    /// Логика взаимодействия для LogIn.xaml
+    /// Логика взаимодействия для AddClient.xaml
     /// </summary>
-    public partial class LogIn : Window
+    public partial class AddClient : Window
     {
-        public LogIn()
+        public AddClient()
         {
             InitializeComponent();
         }
