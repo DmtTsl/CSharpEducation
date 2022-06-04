@@ -270,30 +270,13 @@ namespace Task_1_2_3_MVVM
             MainWindow.DataContext = this;
             
             Clients.CollectionChanged += Clients_CollectionChanged;
-            //mainVM.MainWindow.listBoxClientList.SelectionChanged += ListBoxClientList_SelectionChanged;
-            //mainVM.MainWindow.buttonChangeEmployer.Click += ButtonChangeEmployer_Click;
         }
         public void AddNewClient(Client client)
         {
             Clients.Add(client);
             SaveClients();
-        }
-        
-        public void Sort()
-        {
-            for (int i = 0; i < Clients.Count-1; i++)
-            {
-                for (int j = i + 1; j < Clients.Count; j++)
-                {
-                    if (Clients[i].CompareTo(Clients[j]) > 0)
-                    {
-                        Client tmpClient = Clients[i];
-                        Clients[i] = Clients[j];
-                        Clients[i] = tmpClient;
-                    } 
-                }
-            }
-        }
+        }        
+       
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
