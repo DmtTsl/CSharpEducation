@@ -67,63 +67,7 @@ namespace Task_1_2_3_MVVM
             }
         }
         private RelayCommand _phoneLostFocus;
-        public RelayCommand PhoneLostFocus
-        {
-            get
-            {
-                return _phoneLostFocus ??
-                    (_phoneLostFocus = new RelayCommand(obj =>
-                    {
-
-                        //if (ClientToShow.PhoneNumber.Length < 10 && !string.IsNullOrEmpty(ClientToShow.PhoneNumber))
-                        //{
-                        //    MessageBox.Show("Номер телефона должен состоять из 10 цифр");
-
-                        //}
-                        //if (ClientToShow.PhoneNumber.Length < 10)
-                        //{
-                        //    MessageBox.Show("Номер телефона должен состоять из 10 цифр");
-                        //    ClientToShow.PhoneNumber = null;
-                        //}
-                        //else
-                        //{
-                        //    string s = ClientToShow.PhoneNumber;
-
-
-
-                        //    ClientToShow.PhoneNumber = "+7(" + s.Substring(0, 3) + ")" + s.Substring(3);
-                        //}
-
-                    }));
-            }
-        }
-        private RelayCommand _phoneGotFocus;
-        public RelayCommand PhoneGotFocus
-        {
-            get
-            {
-                return _phoneGotFocus ??
-                    (_phoneGotFocus = new RelayCommand(obj =>
-                    {
-                        //if(!string.IsNullOrEmpty(ClientToShow.PhoneNumber))
-                        //{
-                        //    MessageBox.Show("Ok");
-                        //    string s = ClientToShow.PhoneNumber;
-                        //    s.Remove(0, 3);
-                        //    foreach(char c in s)
-                        //    {
-                        //        if (!char.IsDigit(c))
-                        //        {
-                        //            s.Replace(c.ToString(), "");
-                        //        }
-                    
-                        //    }
-                        //    MessageBox.Show(s);
-                        //    ClientToShow.PhoneNumber = s;
-                        //}
-                    }));
-            }
-        }
+        
         private RelayCommand _addClient;
         public RelayCommand AddClient
         {

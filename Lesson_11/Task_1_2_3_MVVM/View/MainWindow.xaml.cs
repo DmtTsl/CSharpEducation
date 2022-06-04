@@ -48,10 +48,5 @@ namespace Task_1_2_3_MVVM
             }
         }
 
-        private void textBoxPhoneNumber_LostFocus(object sender, RoutedEventArgs e)
-        {
-            //MessageBox.Show("Номер телефона должен состоять из 10 цифр");
-            
-        }
     }
 }
