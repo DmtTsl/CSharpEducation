@@ -69,7 +69,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\MainWindowCommands.cs" />
     <Compile Include="Converter\PassNumberConverter.cs" />
     <Compile Include="Converter\PhoneNumberConverter.cs" />
     <Compile Include="Model\ClientValidation.cs" />

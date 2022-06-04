@@ -9,7 +9,7 @@ namespace Task_1_2_3_MVVM
 {
     public partial class Client: IDataErrorInfo
     {
-        public string Error => throw new NotImplementedException();
+        public string Error { get; }
 
         public string this[string columnName]
         {

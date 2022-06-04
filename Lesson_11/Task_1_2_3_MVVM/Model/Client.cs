@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Task_1_2_3_MVVM
 {    
-    public partial class Client : INotifyPropertyChanged
+    public partial class Client : INotifyPropertyChanged, IComparable<Client>
     {
         private string _firstName;
         private string _secondName;
@@ -89,8 +89,9 @@ namespace Task_1_2_3_MVVM
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
-       
-
-        
+        public int CompareTo(Client other)
+        {
+            return this.SecondName.CompareTo(other.SecondName);
+        }
     }
 }

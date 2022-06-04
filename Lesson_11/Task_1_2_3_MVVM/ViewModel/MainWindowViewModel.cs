@@ -66,8 +66,7 @@ namespace Task_1_2_3_MVVM
                     }));
             }
         }
-        private RelayCommand _phoneLostFocus;
-        
+                
         private RelayCommand _addClient;
         public RelayCommand AddClient
         {
@@ -83,6 +82,7 @@ namespace Task_1_2_3_MVVM
                         if (AddClientWindow.DialogResult == true)
                         {
                             AddNewClient(AddClientViewModel.NewClient);
+                            Sort(Clients);
                         }
                         ClientToShow = new Client();
                     }));
@@ -115,6 +115,7 @@ namespace Task_1_2_3_MVVM
                           SelectedClient = LogInViewModel.SelectedEmployer.SetClientInformation(ClientToShow);
                           Clients[SelectedClientIndex] = SelectedClient;
                           SaveClients();
+                          Sort(Clients);
                           ClientToShow = new Client();
                       }
                       
@@ -260,16 +261,25 @@ namespace Task_1_2_3_MVVM
                 window.buttonSaveClient.IsEnabled = true;
             }
             GetSavedClients();
-            var list = new List<Client>(Clients);
-            list.Sort();
-            Clients = new ObservableCollection<Client>(list);
-
+            Sort(Clients);
 
 
             MainWindow.DataContext = null;
             MainWindow.DataContext = this;
             
             Clients.CollectionChanged += Clients_CollectionChanged;
+        }
+        public void Sort(ObservableCollection<Client> clients)
+        {
+        start:
+            for (int i = 0; i < clients.Count - 1; i++)
+            {
+                if (clients[i].CompareTo(clients[i + 1]) > 0)
+                {
+                    clients.Move(i, i + 1);
+                    goto start;
+                }
+            }
         }
         public void AddNewClient(Client client)
         {
