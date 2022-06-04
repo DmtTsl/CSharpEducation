@@ -23,5 +23,23 @@ namespace Task_1_2_3_MVVM
         {
             InitializeComponent();
         }
+
+        private void textBoxPassNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Char.IsDigit(e.Text, 0))
+            {
+                e.Handled = true;
+                MessageBox.Show("Допустимо вводить только цифры");
+            }
+        }
+
+        private void textBoxPhoneNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Char.IsDigit(e.Text, 0))
+            {
+                e.Handled = true;
+                MessageBox.Show("Допустимо вводить только цифры");
+            }
+        }
     }
 }

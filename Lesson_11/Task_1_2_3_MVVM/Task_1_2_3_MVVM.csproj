@@ -69,6 +69,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\MainWindowCommands.cs" />
+    <Compile Include="Converter\PassNumberConverter.cs" />
+    <Compile Include="Converter\PhoneNumberConverter.cs" />
+    <Compile Include="Model\ClientValidation.cs" />
     <Compile Include="ViewModel\AddClientViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\AddClient.xaml.cs">
@@ -94,7 +98,6 @@
     <Compile Include="Model\Consultant.cs" />
     <Compile Include="Model\Employer.cs" />
     <Compile Include="Model\Manager.cs" />
-    <Compile Include="Resources\LogResource.cs" />
     <Compile Include="ViewModel\LogInViewModel.cs" />
     <Compile Include="View\LogIn.xaml.cs">
       <DependentUpon>LogIn.xaml</DependentUpon>

@@ -9,10 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Threading;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 
 namespace Task_1_2_3_MVVM
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel:INotifyPropertyChanged
     {
         private RelayCommand _changeEmployer;
         public RelayCommand ChangeEmployer
@@ -22,13 +25,10 @@ namespace Task_1_2_3_MVVM
                 return _changeEmployer ??
                     (_changeEmployer = new RelayCommand(obj =>
                     {
+                        Clients.CollectionChanged -= Clients_CollectionChanged;
                         Clients.Clear();
-                        MainWindow.DataContext = null;
-                        MainWindow.textBoxSecondName.Text = "";
-                        MainWindow.textBoxFirstName.Text = "";
-                        MainWindow.textBoxMiddleName.Text = "";
-                        MainWindow.textBoxPassNumber.Text = "";
-                        MainWindow.textBoxPhoneNumber.Text = "";
+                        ClientToShow = new Client();
+                        MainWindow.DataContext = null;                        
                         LogIn = new LogIn();
                         LogInViewModel.LogIn = LogIn;
                         LogIn.DataContext = LogInViewModel;
@@ -61,8 +61,66 @@ namespace Task_1_2_3_MVVM
                     (_selectionChanged = new RelayCommand(obj =>
                     {
                         if (SelectedClient == null) return;
-                        LogInViewModel.SelectedEmployer.GetClientInformation(SelectedClient);
-                        MainWindow.groupBoxClientInfo.DataContext = LogInViewModel.SelectedEmployer.Client;
+                        ClientToShow = LogInViewModel.SelectedEmployer.GetClientInformation(SelectedClient);
+                        
+                    }));
+            }
+        }
+        private RelayCommand _phoneLostFocus;
+        public RelayCommand PhoneLostFocus
+        {
+            get
+            {
+                return _phoneLostFocus ??
+                    (_phoneLostFocus = new RelayCommand(obj =>
+                    {
+
+                        //if (ClientToShow.PhoneNumber.Length < 10 && !string.IsNullOrEmpty(ClientToShow.PhoneNumber))
+                        //{
+                        //    MessageBox.Show("Номер телефона должен состоять из 10 цифр");
+
+                        //}
+                        //if (ClientToShow.PhoneNumber.Length < 10)
+                        //{
+                        //    MessageBox.Show("Номер телефона должен состоять из 10 цифр");
+                        //    ClientToShow.PhoneNumber = null;
+                        //}
+                        //else
+                        //{
+                        //    string s = ClientToShow.PhoneNumber;
+
+
+
+                        //    ClientToShow.PhoneNumber = "+7(" + s.Substring(0, 3) + ")" + s.Substring(3);
+                        //}
+
+                    }));
+            }
+        }
+        private RelayCommand _phoneGotFocus;
+        public RelayCommand PhoneGotFocus
+        {
+            get
+            {
+                return _phoneGotFocus ??
+                    (_phoneGotFocus = new RelayCommand(obj =>
+                    {
+                        //if(!string.IsNullOrEmpty(ClientToShow.PhoneNumber))
+                        //{
+                        //    MessageBox.Show("Ok");
+                        //    string s = ClientToShow.PhoneNumber;
+                        //    s.Remove(0, 3);
+                        //    foreach(char c in s)
+                        //    {
+                        //        if (!char.IsDigit(c))
+                        //        {
+                        //            s.Replace(c.ToString(), "");
+                        //        }
+                    
+                        //    }
+                        //    MessageBox.Show(s);
+                        //    ClientToShow.PhoneNumber = s;
+                        //}
                     }));
             }
         }
@@ -82,6 +140,7 @@ namespace Task_1_2_3_MVVM
                         {
                             AddNewClient(AddClientViewModel.NewClient);
                         }
+                        ClientToShow = new Client();
                     }));
             }
         }
@@ -93,18 +152,26 @@ namespace Task_1_2_3_MVVM
                 return _saveClientChanges ??
                   (_saveClientChanges = new RelayCommand(obj =>
                   {
-                      if (LogInViewModel.SelectedEmployer.Client.SecondName == "" || 
-                      LogInViewModel.SelectedEmployer.Client.FirstName == "" || 
-                      LogInViewModel.SelectedEmployer.Client.PassNumber == "")
+                      if (ClientToShow.SecondName == "" ||
+                      ClientToShow.FirstName == "" ||
+                      ClientToShow.PassNumber == "")
                       {
                           MessageBox.Show("Фамилия, имя и номер паспорта не могут быть пустыми");
                       }
+                      else if(!string.IsNullOrEmpty(ClientToShow.PassNumber) && ClientToShow.PassNumber.Length < 10)
+                      {
+                          MessageBox.Show("Номер паспорта должен состоять из 10 цифр");
+                      }
+                      else if (!string.IsNullOrEmpty(ClientToShow.PhoneNumber) && ClientToShow.PhoneNumber.Length < 10)
+                      {
+                          MessageBox.Show("Номер nелефона должен состоять из 10 цифр");
+                      }
                       else
                       {
-                          SelectedClient = LogInViewModel.SelectedEmployer.SetClientInformation();
+                          SelectedClient = LogInViewModel.SelectedEmployer.SetClientInformation(ClientToShow);
                           Clients[SelectedClientIndex] = SelectedClient;
                           SaveClients();
-
+                          ClientToShow = new Client();
                       }
                       
                   }, 
@@ -121,6 +188,7 @@ namespace Task_1_2_3_MVVM
                     {
                         Clients.Remove(SelectedClient);
                         SaveClients();
+                        ClientToShow = new Client();
                     },
                     obj => SelectedClient != null));
             }
@@ -136,13 +204,26 @@ namespace Task_1_2_3_MVVM
         public Client SelectedClient { get; set; }
 
         public int SelectedClientIndex { get; set; }
+        private Client _clientToShow;
+        public Client ClientToShow 
+        { 
+            get 
+            {
+                return _clientToShow;  
+            }
+            set 
+            {
+                _clientToShow = value; OnPropertyChanged();
+            } }
         
         public MainWindowViewModel()
         {
             Clients = new ObservableCollection<Client>();
+            
             MainWindow = new MainWindow();
             MainWindow.DataContext = this;
             MainWindow.Show();
+           
         }
         private void SaveClients()
         {
@@ -235,9 +316,15 @@ namespace Task_1_2_3_MVVM
                 window.buttonSaveClient.IsEnabled = true;
             }
             GetSavedClients();
+            var list = new List<Client>(Clients);
+            list.Sort();
+            Clients = new ObservableCollection<Client>(list);
+
+
+
             MainWindow.DataContext = null;
             MainWindow.DataContext = this;
-
+            
             Clients.CollectionChanged += Clients_CollectionChanged;
             //mainVM.MainWindow.listBoxClientList.SelectionChanged += ListBoxClientList_SelectionChanged;
             //mainVM.MainWindow.buttonChangeEmployer.Click += ButtonChangeEmployer_Click;
@@ -247,5 +334,28 @@ namespace Task_1_2_3_MVVM
             Clients.Add(client);
             SaveClients();
         }
+        
+        public void Sort()
+        {
+            for (int i = 0; i < Clients.Count-1; i++)
+            {
+                for (int j = i + 1; j < Clients.Count; j++)
+                {
+                    if (Clients[i].CompareTo(Clients[j]) > 0)
+                    {
+                        Client tmpClient = Clients[i];
+                        Clients[i] = Clients[j];
+                        Clients[i] = tmpClient;
+                    } 
+                }
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+       
     }
 }

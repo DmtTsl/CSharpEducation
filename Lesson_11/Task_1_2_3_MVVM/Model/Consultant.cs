@@ -20,18 +20,19 @@ namespace Task_1_2_3_MVVM
         }
 
 
-        public override void GetClientInformation(Client client)
+        public override Client GetClientInformation(Client client)
         {
             PassNumber = client.PassNumber;
             string clientPassNumber = client.PassNumber.Replace(client.PassNumber, new string('*', client.PassNumber.Length - 1));
-            Client = new Client(client.SecondName, client.FirstName, client.MiddleName, clientPassNumber, client.PhoneNumber);
+            Client Client = new Client(client.SecondName, client.FirstName, client.MiddleName, clientPassNumber, client.PhoneNumber);
             Client.Logs = client.Logs;
+            return Client;
         }
 
-        public override Client SetClientInformation()
+        public override Client SetClientInformation(Client client)
         {
-            Client.PassNumber = PassNumber;
-            return Client;
+            client.PassNumber = PassNumber;
+            return client;
         }
         public override void GetSavedLoginPass()
         {

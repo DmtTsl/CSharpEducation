@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Task_1_2_3_MVVM
 {    
-    public class Client : INotifyPropertyChanged
+    public partial class Client : INotifyPropertyChanged
     {
         private string _firstName;
         private string _secondName;
@@ -64,6 +64,8 @@ namespace Task_1_2_3_MVVM
 
         public ObservableCollection<Log> Logs { get; set; }
 
+       
+
         public class Log
         {
             public string ChangeDateTime { get; set; }
@@ -87,5 +89,8 @@ namespace Task_1_2_3_MVVM
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
+       
+
+        
     }
 }

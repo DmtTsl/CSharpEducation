@@ -16,10 +16,16 @@ namespace Task_1_2_3_MVVM
             GetSavedLoginPass();
         }
 
-        public override void GetClientInformation(Client client)
+        public override Client GetClientInformation(Client client)
         {
-            Client = new Client(client.SecondName, client.FirstName, client.MiddleName, client.PassNumber, client.PhoneNumber);
+            Client Client = new Client(client.SecondName, client.FirstName, client.MiddleName, client.PassNumber, client.PhoneNumber);
             Client.Logs = client.Logs;
+            return Client;
+        }
+        public override Client SetClientInformation(Client client)
+        {
+            return client;
+
         }
 
         public override void GetSavedLoginPass()
@@ -31,11 +37,7 @@ namespace Task_1_2_3_MVVM
             }
         }
 
-        public override Client SetClientInformation()
-        {
-            return Client;
-            
-        }
+       
 
         public override void SaveLoginPass()
         {

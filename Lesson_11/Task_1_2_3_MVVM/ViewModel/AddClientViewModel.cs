@@ -28,6 +28,14 @@ namespace Task_1_2_3_MVVM
                            {
                                MessageBox.Show("Не введены все данные клиента. Фамилия, имя и номер паспорта обязательны для введения");
                            }
+                           else if (!string.IsNullOrEmpty(NewClient.PassNumber) && NewClient.PassNumber.Length < 10)
+                           {
+                               MessageBox.Show("Номер паспорта должен состоять из 10 цифр");
+                           }
+                           else if (!string.IsNullOrEmpty(NewClient.PhoneNumber) && NewClient.PhoneNumber.Length < 10)
+                           {
+                               MessageBox.Show("Номер nелефона должен состоять из 10 цифр");
+                           }
                            else
                            {
                                window.DialogResult = true;
