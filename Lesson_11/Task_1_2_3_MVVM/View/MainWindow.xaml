@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Task_1_2_3_MVVM"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"        
         mc:Ignorable="d"
-        Title="Работа с клиентами" Height="592" Width="800" BorderThickness="2,2,2,2" BorderBrush="#FF72CFFF" MinHeight="497" 
+        Title="Работа с клиентами" Height="600" Width="800" BorderThickness="2,2,2,2" BorderBrush="#FF72CFFF" MinHeight="600" 
         MinWidth="800" ScrollViewer.VerticalScrollBarVisibility="Disabled" WindowStartupLocation="CenterScreen" Foreground="Black" WindowStyle="SingleBorderWindow">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="ContentRendered">
@@ -163,11 +163,6 @@
             </ListBox>
 
         </GroupBox>
-
-
-
-
-
 
     </Grid>
 </Window>
