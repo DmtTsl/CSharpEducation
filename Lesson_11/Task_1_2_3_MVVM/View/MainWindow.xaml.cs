@@ -48,6 +48,22 @@ namespace Task_1_2_3_MVVM
             }
         }
 
-       
+        private void textBoxPhoneNumber_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Space)
+            {
+                e.Handled = true;
+                MessageBox.Show("Допустимо вводить только цифры");
+            }
+        }
+
+        private void textBoxPassNumber_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+                MessageBox.Show("Допустимо вводить только цифры");
+            }
+        }
     }
 }

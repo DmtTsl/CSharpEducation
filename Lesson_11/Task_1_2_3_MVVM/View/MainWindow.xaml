@@ -102,12 +102,12 @@
                     <TextBox x:Name="textBoxPassNumber" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                          Margin="0,0,0,0" Grid.Column="1" Grid.Row="3" Text="{Binding ClientToShow.PassNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
                          Converter={StaticResource PassConverter}, ValidatesOnDataErrors=True}" 
-                         MaxLength="10" MaxLines="1" ToolTip="10 цифр" PreviewTextInput="textBoxPassNumber_PreviewTextInput" />
+                         MaxLength="10" MaxLines="1" ToolTip="10 цифр" PreviewTextInput="textBoxPassNumber_PreviewTextInput" PreviewKeyDown="textBoxPassNumber_PreviewKeyDown" />
 
                     <TextBox x:Name="textBoxPhoneNumber" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                              Margin="0,0,0,0" Grid.Column="1" Grid.Row="4" Text="{Binding ClientToShow.PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
                              Converter={StaticResource PhoneConverter}, ValidatesOnDataErrors=True}" ToolTip="10 цифр"                           
-                             MaxLength="10" MaxLines="1" OpacityMask="Black" Visibility="Visible" PreviewTextInput="textBoxPhoneNumber_PreviewTextInput" >
+                             MaxLength="10" MaxLines="1" OpacityMask="Black" Visibility="Visible" PreviewTextInput="textBoxPhoneNumber_PreviewTextInput" PreviewKeyDown="textBoxPhoneNumber_PreviewKeyDown" >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="LostFocus">
                                 <i:InvokeCommandAction Command="{Binding PhoneLostFocus}" PassEventArgsToCommand="True" CommandParameter="textBoxPhoneNumber"/>
