@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Task_1_2_3_MVVM
 {
     public partial class Client: IDataErrorInfo
     {
+        [JsonIgnore]
         public string Error { get; }
 
         public string this[string columnName]

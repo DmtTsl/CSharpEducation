@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Авторизация" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Width="400" 
-        Height="250" Padding="0,7,0,0" SizeToContent="Height" >
+        Height="250" Padding="0,7,0,0" SizeToContent="Height" Topmost="True" >
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction Command="{Binding Closed}"/>

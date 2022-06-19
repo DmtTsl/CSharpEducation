@@ -132,7 +132,7 @@
             Foreground="#FF3C5EC7" FontStyle="Normal" FontStretch="Medium" FontWeight="Medium" Command="{Binding SaveClientChanges}" CommandParameter="{Binding SelectedClient}"/>
         </StackPanel>
         <GroupBox x:Name="groupBoxClientLog" Grid.Column="2" Header="История изменения клиента" HorizontalContentAlignment="Stretch" 
-                      Margin="10,265,10,10" VerticalContentAlignment="Stretch" Padding="0,0,0,0" DataContext="{Binding SelectedClient}" Grid.RowSpan="2" >
+                      Margin="10,265,10,10" VerticalContentAlignment="Stretch" Padding="0,0,0,0" DataContext="{Binding ClientToShow}" Grid.RowSpan="2" >
 
             <ListBox x:Name="listBox" ItemsSource="{Binding Logs}" Focusable="False" Margin="0,5,0,5" ScrollViewer.CanContentScroll="True" Background="#FFD8D8D8" 
                      IsTextSearchEnabled="False" VerticalContentAlignment="Stretch">
