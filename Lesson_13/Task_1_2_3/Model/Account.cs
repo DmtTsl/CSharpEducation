@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Task_1_2_3
 {
-    public abstract class Account
+    abstract class Account
     {
-        public int AccountNumber { get; }
-        public decimal Sum { get; set; }
+        string AccountNumber { get; set; }
+        double Sum { get; set; }
         public Account()
         {
             if (AccountNumberRepository.freeNumber.Count > 0)
@@ -21,28 +21,10 @@ namespace Task_1_2_3
             }
             else
             {
-                AccountNumber = ++AccountNumberRepository.accountNumberCount;
+                AccountNumber = AccountNumberRepository.accountNumberCount + 1;
                 
             }
             
-        }
-        public void TransferMoney(Account accountReciever, decimal transferSum)
-        {
-            if (this.Sum >= transferSum)
-            {
-                this.Sum -= transferSum;
-                accountReciever.Sum += transferSum;
-            }
-        }
-        public void AddMoney(decimal addSum)
-        {
-            this.Sum += addSum;
-        }
-        public override string ToString()
-        {
-            string str = this.AccountNumber.ToString().PadLeft(8,'0');
-
-            return str;
         }
     }
 }

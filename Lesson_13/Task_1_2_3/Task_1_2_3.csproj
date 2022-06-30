@@ -66,9 +66,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\Client.cs" />
-    <Compile Include="Model\DepositAccount.cs" />
-    <Compile Include="Model\PaymentAccount.cs" />
     <Compile Include="Repository\AccountNumberRepository.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
