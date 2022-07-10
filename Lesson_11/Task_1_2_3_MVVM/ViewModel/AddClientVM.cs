@@ -7,11 +7,11 @@ using System.Windows;
 
 namespace Task_1_2_3_MVVM
 {
-    public class AddClientViewModel
+    public class AddClientVM
     {
         public Client NewClient { get; set; }
         public AddClient window { get; set; }
-        public AddClientViewModel(AddClient window)
+        public AddClientVM(AddClient window)
         {
             NewClient = new Client();
             this.window = window;

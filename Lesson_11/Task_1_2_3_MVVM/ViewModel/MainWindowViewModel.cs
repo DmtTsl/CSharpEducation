@@ -76,7 +76,7 @@ namespace Task_1_2_3_MVVM
                     (_addClient = new RelayCommand(obj =>
                     {
                         AddClientWindow = new AddClient();
-                        AddClientViewModel = new AddClientViewModel(AddClientWindow);
+                        AddClientViewModel = new AddClientVM(AddClientWindow);
                         AddClientWindow.DataContext = AddClientViewModel;
                         AddClientWindow.ShowDialog();
                         if (AddClientWindow.DialogResult == true)
@@ -142,7 +142,7 @@ namespace Task_1_2_3_MVVM
         public LogIn LogIn { get; set; }
         public LogInViewModel LogInViewModel { get; set; }
         public AddClient AddClientWindow { get; set; }
-        public AddClientViewModel AddClientViewModel { get; set; }
+        public AddClientVM AddClientViewModel { get; set; }
        
         public ObservableCollection<Client> Clients { get; set; }
 

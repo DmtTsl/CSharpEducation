@@ -66,7 +66,7 @@
     <Compile Include="Converter\PassNumberConverter.cs" />
     <Compile Include="Converter\PhoneNumberConverter.cs" />
     <Compile Include="Model\ClientValidation.cs" />
-    <Compile Include="ViewModel\AddClientViewModel.cs" />
+    <Compile Include="ViewModel\AddClientVM.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\AddClient.xaml.cs">
       <DependentUpon>AddClient.xaml</DependentUpon>

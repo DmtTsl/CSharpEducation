@@ -1,0 +1,32 @@
+﻿<Window x:Class="Task_1_2_3.AddAccountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task_1_2_3"
+        mc:Ignorable="d"
+        Title="Открытие счета" Height="450" Width="280" Background="#FF848484" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" SizeToContent="Height" >
+    <Window.Resources>
+        <local:VisibilityConverter x:Key="VisibilityConverter"></local:VisibilityConverter>
+        <local:ReverseBool x:Key="ReverseBool"></local:ReverseBool>
+    </Window.Resources>
+    <Grid>
+
+        <RadioButton x:Name="radioButton" Content="Расчетный счет" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding PaymentAccIsChecked, Mode=OneWayToSource}"
+                     IsEnabled="{Binding SelectedClient.HasPaymentAcc, Converter={StaticResource ReverseBool}}"/>
+        <RadioButton x:Name="radioButton1" Content="Депозитный счет" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" IsChecked="{Binding DepositAccIsChecked, Mode=OneWayToSource}"
+                     IsEnabled="{Binding SelectedClient.HasDepositAcc, Converter={StaticResource ReverseBool}}"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,40,0,0" Text="Сумма внесения" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Right" Margin="0,40,10,0" VerticalAlignment="Top" Width="100" Text="{Binding Sum, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                 IsEnabled="{Binding ButtonEnabled}"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Right" Margin="0,70,10,0" VerticalAlignment="Top" Width="100" Text="{Binding Percent, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                 Visibility="{Binding ElementName=radioButton1, Path=IsChecked, Converter={StaticResource VisibilityConverter}}"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,70,0,0" Text="Процент по депозиту" VerticalAlignment="Top"
+                   Visibility="{Binding ElementName=radioButton1, Path=IsChecked, Converter={StaticResource VisibilityConverter}}"/>
+        <Button x:Name="button" Content="Создать" HorizontalAlignment="Center" Margin="0,100,0,10" VerticalAlignment="Top" IsEnabled="{Binding ButtonEnabled}" Command="{Binding AddAccountCommand}"/>
+
+
+
+
+    </Grid>
+</Window>
