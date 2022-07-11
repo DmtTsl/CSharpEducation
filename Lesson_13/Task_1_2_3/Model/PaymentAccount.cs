@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Task_1_2_3
+﻿namespace Task_1_2_3
 {
     public class PaymentAccount:Account
     {
@@ -13,6 +7,5 @@ namespace Task_1_2_3
         {
             this.AccountSum = sum;
         }
-
     }
 }

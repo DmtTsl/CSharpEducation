@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
-using System.IO;
-using System.Windows;
 
 namespace Task_1_2_3
 {
@@ -15,7 +9,6 @@ namespace Task_1_2_3
            System.Globalization.CultureInfo culture)
         {
             string s = value as string;
-
             if (string.IsNullOrEmpty(s)) return null;
             if (s.Length == 10)
             {
@@ -33,15 +26,12 @@ namespace Task_1_2_3
             s = s.Remove(0, 3);
             foreach (char c in s)
             {
-
                 if (!char.IsDigit(c))
                 {
                     s = s.Replace(c.ToString(), "");
                 }
             }
-            return s;
-            
-            
+            return s;    
         }
     }
 }

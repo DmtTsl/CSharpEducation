@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Task_1_2_3
@@ -16,7 +13,6 @@ namespace Task_1_2_3
         {
             File.WriteAllText("AccNumCount.txt", accountNumberCount.ToString());
             File.WriteAllText("FreeNumber.json", JsonConvert.SerializeObject(freeNumber));
-        }
-        
+        }        
     }
 }

@@ -1,10 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task_1_2_3
 {
@@ -32,7 +27,6 @@ namespace Task_1_2_3
             HasPaymentAcc = false;
             HasDepositAcc = false;
         }
-
         public override string ToString()
         {
             return $"{SecondName} {FirstName} {MiddleName}";

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 
 namespace Task_1_2_3
 {
@@ -18,11 +12,9 @@ namespace Task_1_2_3
             {
                 foreach (Account account in client.Accounts)
                 {
-                    AccountList.Add(account);
-                    
+                    AccountList.Add(account);                    
                 }
-            }
-            
+            }            
         }       
     }
 }

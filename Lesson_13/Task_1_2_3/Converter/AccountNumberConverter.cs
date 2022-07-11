@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace Task_1_2_3
@@ -15,7 +11,6 @@ namespace Task_1_2_3
             string s = value.ToString().PadLeft(7, '0');
 
             return s;
-
         }
 
         public object ConvertBack(object value, Type targetType, object parameter,

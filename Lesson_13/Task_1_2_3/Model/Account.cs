@@ -1,15 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task_1_2_3
-{
-    
+{    
     public abstract class Account: INotifyPropertyChanged
     {
         public int AccountNumber { get; set; }
@@ -24,25 +19,20 @@ namespace Task_1_2_3
             get { return this is DepositAccount?"Депозитный":"Расчетный"; }            
         }
         public Account() { }
-
         public Account(bool isNew)
         {
             if (AccountNumberRepository.freeNumber.Count > 0)
             {
                 AccountNumberRepository.freeNumber.Sort();
                 AccountNumber = AccountNumberRepository.freeNumber.First();
-                AccountNumberRepository.freeNumber.Remove(AccountNumber);
-                
+                AccountNumberRepository.freeNumber.Remove(AccountNumber);                
             }
             else
             {
-                AccountNumber = ++AccountNumberRepository.accountNumberCount;
-                
+                AccountNumber = ++AccountNumberRepository.accountNumberCount;                
             }
-            AccountNumberRepository.SaveData();
-            
-        }
-        
+            AccountNumberRepository.SaveData();            
+        }        
         public void TransferMoney(Account accountReciever, decimal transferSum)
         {
             if (this.AccountSum >= transferSum)

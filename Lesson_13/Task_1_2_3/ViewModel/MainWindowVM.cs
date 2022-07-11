@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Newtonsoft.Json;
-
-
 
 namespace Task_1_2_3
 {
     public class MainWindowVM
     {
-        public ObservableCollection<Client> Clients { get; set; }
-        
+        public ObservableCollection<Client> Clients { get; set; }        
         public Client SelectedClient { get; set; }
         public Account SelectedAccount { get; set; }       
         public decimal SumToAddTake { get; set; }
@@ -27,7 +18,6 @@ namespace Task_1_2_3
         public AccountTempList AccountTempList { get; set; }
         public TransferSumWindow TransferSumWindow { get; set; }
         public TransferSumWindowVM TransferSumWindowVM { get; set; }
-
         public MainWindowVM()
         {
             GetClients();
@@ -41,8 +31,7 @@ namespace Task_1_2_3
                 File.WriteAllText("FreeNumber.json", "[]");
             }
                 
-        }
-       
+        }       
         private void GetClients()
         {
             if (File.Exists("clients.json"))
@@ -111,7 +100,6 @@ namespace Task_1_2_3
                     }, (obj) => SelectedClient != null));
             }
         }
-
         private RelayCommand _addAccount;
         public RelayCommand AddAccount
         {
@@ -129,8 +117,7 @@ namespace Task_1_2_3
                             SelectedClient.Accounts.Add(AddAccountWindowVM.NewAccount);
                             if (AddAccountWindowVM.NewAccount is PaymentAccount) SelectedClient.HasPaymentAcc = true;
                             else SelectedClient.HasDepositAcc = true;
-                            SaveClients();
-                            
+                            SaveClients();                            
                         }
                     },(obj)=>SelectedClient!=null && SelectedClient.Accounts.Count<2));
             }
@@ -168,12 +155,10 @@ namespace Task_1_2_3
                     (_addSum = new RelayCommand(obj =>
                     {
                         SelectedAccount.AddMoney(SumToAddTake);
-                        SaveClients();
-                        
+                        SaveClients();                        
                     }, (obj) => SelectedAccount != null && SumToAddTake != 0));
             }
         }
-
         private RelayCommand _takeSum;
         public RelayCommand TakeSum
         {
@@ -189,11 +174,9 @@ namespace Task_1_2_3
                         }
                         else MessageBox.Show($"Снятие средств невозможно! На счете номер {SelectedAccount.AccountNumber:D7} недостаточно средств",
                                     "ВНИМАНИЕ", MessageBoxButton.OK, MessageBoxImage.Warning);
-
                     }, (obj) => SelectedAccount != null && SumToAddTake != 0));
             }
         }
-
         private RelayCommand _transferSum;
         public RelayCommand TransferSum
         {
@@ -224,7 +207,6 @@ namespace Task_1_2_3
                             else MessageBox.Show($"Перевод невозможен! На счете номер {SelectedAccount.AccountNumber:D7} недостаточно средств",
                                     "ВНИМАНИЕ", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
-
                     }, (obj) => SelectedAccount != null));
             }
         }

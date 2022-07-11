@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Task_1_2_3
 {
@@ -18,8 +13,7 @@ namespace Task_1_2_3
             public string PhoneNumber { get; set; }
         }
         public NewClientInfo NewClient { get; set; }
-        AddClientWindow AddClientWindow { get; set; }   
-
+        AddClientWindow AddClientWindow { get; set; }  
         public AddClientWindowVM (AddClientWindow addClientWindow)
         {
             NewClient = new NewClientInfo();
