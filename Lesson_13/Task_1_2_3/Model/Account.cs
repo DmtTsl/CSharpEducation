@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Task_1_2_3
+namespace Task
 {    
     public abstract class Account: INotifyPropertyChanged
     {

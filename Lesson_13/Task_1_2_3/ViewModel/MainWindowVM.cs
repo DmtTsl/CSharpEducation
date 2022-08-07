@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows;
 using Newtonsoft.Json;
 
-namespace Task_1_2_3
+namespace Task
 {
     public class MainWindowVM
     {

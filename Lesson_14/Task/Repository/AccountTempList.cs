@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Task
 {
-    public class AccountTempList
+    public class AccountTempList : IEnumerable
     {
         public List<Account> AccountList { get; set; }
         public AccountTempList(IEnumerable<Client> clients)
@@ -15,6 +16,13 @@ namespace Task
                     AccountList.Add(account);                    
                 }
             }            
-        }       
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return AccountList.GetEnumerator();
+        }
+
+        
     }
 }

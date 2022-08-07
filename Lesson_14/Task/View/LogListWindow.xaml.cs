@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Task
 {
     /// <summary>
-    /// Логика взаимодействия для TransferSumWindow.xaml
+    /// Логика взаимодействия для LogList.xaml
     /// </summary>
-    public partial class TransferSumWindow : Window
+    public partial class LogListWindow : Window
     {
-        public TransferSumWindow()
+        public LogListWindow()
         {
             InitializeComponent();
         }

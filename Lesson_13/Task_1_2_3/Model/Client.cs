@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 
-namespace Task_1_2_3
+namespace Task
 {
     public class Client
     {

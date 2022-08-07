@@ -15,19 +15,25 @@ using System.Windows.Shapes;
 namespace Task
 {
     /// <summary>
-    /// Логика взаимодействия для AddAccountWindow.xaml
+    /// Логика взаимодействия для Authentication.xaml
     /// </summary>
-    public partial class AddAccountWindow : Window
+    public partial class Authentication : Window
     {
-        public AddAccountWindow()
+        public Authentication()
         {
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            AddAccountWindowVM vm = (AddAccountWindowVM)this.DataContext;
-            MessageBox.Show(vm.Percent.ToString());
+        {            
+            if (SecondName.Text == "" || FirstName.Text == "" || MiddleName.Text == "")
+            {
+                MessageBox.Show("Не введены все данные");
+            }
+            else
+            {
+                DialogResult = true;
+            }
         }
     }
 }
