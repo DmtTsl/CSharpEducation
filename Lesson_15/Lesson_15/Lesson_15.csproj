@@ -72,7 +72,7 @@
     <Compile Include="Model\PaymentAccount.cs" />
     <Compile Include="Repository\AccountNumberRepository.cs" />
     <Compile Include="Repository\AccountTempList.cs" />
-    <Compile Include="Repository\Exclusion.cs" />
+    <Compile Include="Repository\Extensions.cs" />
     <Compile Include="ViewModel\AddAccountWindowVM.cs" />
     <Compile Include="ViewModel\AddClientWindowVM.cs" />
     <Compile Include="ViewModel\AuthenticationVM.cs" />
