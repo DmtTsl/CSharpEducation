@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Lesson_15
 {
-    public static class Exclusion
+    public static class Extensions
     {
         public static void Show (this string message)
         {
