@@ -26,7 +26,12 @@ namespace Lesson_15
                 if(SelectedClient != null) SelectedClient.SelectedAccount = value;
             } 
         }
-        public decimal SumToAddTake {get; set; }
+        private decimal _sumToAddTake = 0;
+        public string SumToAddTakeString
+        {
+            
+            set => _sumToAddTake = decimal.TryParse(value,out decimal result)?result:0;
+        }
         public string Title { get; set; }
         public AddClientWindow AddClientWindow { get; set; }
         public AddClientWindowVM AddClientWindowVM { get; set; }
@@ -158,11 +163,12 @@ namespace Lesson_15
                     (_addSum = new RelayCommand(obj =>
                     {
                         SelectedAccount.AccountChangedEvent += AccountLogEventHandler;
-                        SelectedAccount.AddMoney(SumToAddTake);
+                        SelectedAccount.AddMoney(_sumToAddTake);
                         JsonMethods.CreateJsonFile("clients.json", Clients);
                         Logs.Add(Log);
                         JsonMethods.CreateJsonFile("logs.json", Logs);
-                    }, (obj) => SelectedClient != null && SelectedAccount != null && SumToAddTake != 0));
+                        
+                    }, (obj) => SelectedClient != null && SelectedAccount != null && _sumToAddTake != 0));
             }
         }
         private RelayCommand _takeSum;
@@ -174,13 +180,13 @@ namespace Lesson_15
                     (_takeSum = new RelayCommand(obj =>
                     {
                         SelectedAccount.AccountChangedEvent += AccountLogEventHandler;
-                        if (SelectedAccount.TakeMoney(SumToAddTake))
+                        if (SelectedAccount.TakeMoney(_sumToAddTake))
                         {
                             JsonMethods.CreateJsonFile("clients.json", Clients);
                             Logs.Add(Log);
                             JsonMethods.CreateJsonFile("logs.json", Logs);
                         }
-                    }, (obj) => SelectedClient != null && SelectedAccount != null && SumToAddTake != 0));
+                    }, (obj) => SelectedClient != null && SelectedAccount != null && _sumToAddTake != 0));
             }
         }
         private RelayCommand _transferSum;

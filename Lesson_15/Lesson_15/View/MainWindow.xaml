@@ -59,7 +59,7 @@
             <Button Cursor="Hand" Command="{Binding DeleteAccount}">Закрыть счет</Button>
         </StackPanel>
         <StackPanel Grid.Column="2" Margin="10,240,10,10">
-            <TextBox Text="{Binding SumToAddTake, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput"/>
+            <TextBox Text="{Binding SumToAddTakeString, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput"/>
             <Button Cursor="Hand" Command="{Binding AddSum}">Пополнить счет</Button>
             <Button Cursor="Hand" Command="{Binding TakeSum}">Снять средства со счета</Button>
             <Label Height="20"/>
