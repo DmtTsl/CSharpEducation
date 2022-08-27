@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows;
 using Newtonsoft.Json;
 using LogicLibrary;
+using System.Diagnostics;
 
 
 namespace Lesson_15
@@ -34,28 +35,20 @@ namespace Lesson_15
         public TransferSumWindow TransferSumWindow { get; set; }
         public TransferSumWindowVM TransferSumWindowVM { get; set; }
         public LogListWindow LogListWindow { get; set; }
-        public MainWindowVM()
-        {
-            Authentication authentication = new Authentication();
-            
-            authentication.ShowDialog();
-            if ((bool)authentication.DialogResult)
+        public MainWindowVM(string firstName, string secondName, string middleName)
+        {            
+            Emploee = new Emploee(firstName, secondName, middleName);
+            Title = "Работник: " + Emploee.ToString();
+            Clients = JsonMethods.GetJsonFileInfo<Client>("clients.json");
+            Logs = JsonMethods.GetJsonFileInfo<Log>("logs.json");
+            if (!File.Exists("AccNumCount.txt"))
             {
-                AuthenticationVM authenticationVM = authentication.DataContext as AuthenticationVM;
-                Emploee = new Emploee(authenticationVM.FirstName, authenticationVM.SecondName, authenticationVM.MiddleName);
-                Title = "Работник: " + Emploee.ToString();
-                Clients = JsonMethods.GetJsonFileInfo<Client>("clients.json");
-                Logs = JsonMethods.GetJsonFileInfo<Log>("logs.json");
-                if (!File.Exists("AccNumCount.txt"))
-                {
-                    File.WriteAllText("AccNumCount.txt", "0");
-                }
-                if (!File.Exists("FreeNumber.json"))
-                {
-                    File.WriteAllText("FreeNumber.json", "[]");
-                }
+                File.WriteAllText("AccNumCount.txt", "0");
             }
-            else Application.Current.Shutdown();
+            if (!File.Exists("FreeNumber.json"))
+            {
+                File.WriteAllText("FreeNumber.json", "[]");
+            }            
         } 
         private RelayCommand _addClient;
         public RelayCommand AddClient
@@ -142,13 +135,13 @@ namespace Lesson_15
                     (_deleteAccount = new RelayCommand(obj =>
                     {
                         SelectedClient.ClientChangedEvent += ClientLogEventHandler;
-                        if (SelectedClient.DeleteAccount(SelectedClient.SelectedAccount)) 
+                        if (SelectedClient.DeleteAccount(SelectedAccount)) 
                         {
                             JsonMethods.CreateJsonFile("clients.json", Clients);
                             Logs.Add(Log);
                             JsonMethods.CreateJsonFile("logs.json", Logs);
                         }    
-                    }, (obj) => (SelectedClient != null && SelectedClient.SelectedAccount != null)));
+                    }, (obj) => (SelectedClient != null && SelectedAccount != null)));
             }
         }
         public void ClientLogEventHandler(string clientName, ClientChange clientChange, int? accountNumber = null)
@@ -165,11 +158,11 @@ namespace Lesson_15
                     (_addSum = new RelayCommand(obj =>
                     {
                         SelectedAccount.AccountChangedEvent += AccountLogEventHandler;
-                        SelectedClient.SelectedAccount.AddMoney(SumToAddTake);
+                        SelectedAccount.AddMoney(SumToAddTake);
                         JsonMethods.CreateJsonFile("clients.json", Clients);
                         Logs.Add(Log);
                         JsonMethods.CreateJsonFile("logs.json", Logs);
-                    }, (obj) => SelectedClient != null && SelectedClient.SelectedAccount != null && SumToAddTake != 0));
+                    }, (obj) => SelectedClient != null && SelectedAccount != null && SumToAddTake != 0));
             }
         }
         private RelayCommand _takeSum;
@@ -181,13 +174,13 @@ namespace Lesson_15
                     (_takeSum = new RelayCommand(obj =>
                     {
                         SelectedAccount.AccountChangedEvent += AccountLogEventHandler;
-                        if (SelectedClient.SelectedAccount.TakeMoney(SumToAddTake))
+                        if (SelectedAccount.TakeMoney(SumToAddTake))
                         {
                             JsonMethods.CreateJsonFile("clients.json", Clients);
                             Logs.Add(Log);
                             JsonMethods.CreateJsonFile("logs.json", Logs);
                         }
-                    }, (obj) => SelectedClient != null && SelectedClient.SelectedAccount != null && SumToAddTake != 0));
+                    }, (obj) => SelectedClient != null && SelectedAccount != null && SumToAddTake != 0));
             }
         }
         private RelayCommand _transferSum;
@@ -212,7 +205,7 @@ namespace Lesson_15
                                 JsonMethods.CreateJsonFile("logs.json", Logs);
                             }
                         }
-                    }, (obj) => SelectedClient != null && SelectedClient.SelectedAccount != null));
+                    }, (obj) => SelectedClient != null && SelectedAccount != null));
             }
         }
         public void AccountLogEventHandler (AccountChange accountChange,decimal sum, int? accountToTransfer = null)

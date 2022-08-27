@@ -6,10 +6,7 @@
         xmlns:local="clr-namespace:Lesson_15"
         mc:Ignorable="d"
         Title="Аутентификация работника: Введите данные работника" Height="250" Width="400" Background="#FF848484" WindowStartupLocation="CenterScreen">
-    <Window.DataContext>
-        <local:AuthenticationVM/>
-    </Window.DataContext>
-    
+        
         <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>

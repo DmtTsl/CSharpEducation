@@ -13,8 +13,7 @@ namespace Lesson_15
         public string PhoneNumber   { get; set; }
         public ObservableCollection<Account> Accounts { get; set; }
         public bool HasPaymentAcc { get; set; }
-        public bool HasDepositAcc { get; set; }
-
+        public bool HasDepositAcc { get; set; } 
         [JsonIgnore]
         public Account SelectedAccount { get; set; }
         public Client(string secondName, string firstName,  string passportNumber, string middleName = null, string phoneNumber = null)
