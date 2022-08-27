@@ -61,18 +61,18 @@ namespace Lesson_15
                 return false;
             }
         }
-        public void AddMoney(decimal sum)
+        public void AddMoney(decimal? sum)
         {
-            this.AccountSum += sum;
-            AccountChangedEvent?.Invoke(AccountChange.Пополнение, sum);
+            this.AccountSum += (decimal)sum;
+            AccountChangedEvent?.Invoke(AccountChange.Пополнение, (decimal)sum);
             ClearEvent();
         }
-        public bool TakeMoney(decimal sum)
+        public bool TakeMoney(decimal? sum)
         {
-            if (this.AccountSum >= sum)
+            if (this.AccountSum >= (decimal)sum)
             {
-                this.AccountSum -= sum;
-                AccountChangedEvent?.Invoke(AccountChange.Списание, sum);
+                this.AccountSum -= (decimal)sum;
+                AccountChangedEvent?.Invoke(AccountChange.Списание, (decimal)sum);
                 ClearEvent();
                 return true;
             }

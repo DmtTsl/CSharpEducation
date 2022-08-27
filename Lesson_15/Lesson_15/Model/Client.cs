@@ -13,9 +13,7 @@ namespace Lesson_15
         public string PhoneNumber   { get; set; }
         public ObservableCollection<Account> Accounts { get; set; }
         public bool HasPaymentAcc { get; set; }
-        public bool HasDepositAcc { get; set; } 
-        [JsonIgnore]
-        public Account SelectedAccount { get; set; }
+        public bool HasDepositAcc { get; set; }  
         public Client(string secondName, string firstName,  string passportNumber, string middleName = null, string phoneNumber = null)
         {
             SecondName = secondName;
@@ -48,17 +46,17 @@ namespace Lesson_15
         }
         public bool DeleteAccount(Account account)
         {
-            if (SelectedAccount.AccountSum != 0)
+            if (account.AccountSum != 0)
             {                
-                MessageBox.Show($"Невозможно закрыть счет! На счете номер {SelectedAccount.AccountNumber:D7} есть денежные средства",
+                MessageBox.Show($"Невозможно закрыть счет! На счете номер {account.AccountNumber:D7} есть денежные средства",
                     "ВНИМАНИЕ", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-            if (SelectedAccount is PaymentAccount) HasPaymentAcc = false;
+            if (account is PaymentAccount) HasPaymentAcc = false;
             else HasDepositAcc = false;
-            AccountNumberRepository.freeNumber.Add(SelectedAccount.AccountNumber);
+            AccountNumberRepository.freeNumber.Add(account.AccountNumber);
             AccountNumberRepository.SaveData();
-            Accounts.Remove(SelectedAccount);
+            Accounts.Remove(account);
             ClientChangedEvent?.Invoke(this.ToString(), ClientChange.Закрытие_счета, account.AccountNumber);
             ClearEvent();
             return true;

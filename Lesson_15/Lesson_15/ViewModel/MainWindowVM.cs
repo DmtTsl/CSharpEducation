@@ -5,32 +5,30 @@ using System.Windows;
 using Newtonsoft.Json;
 using LogicLibrary;
 using System.Diagnostics;
-
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Lesson_15
 {
-    public class MainWindowVM
+    public class MainWindowVM:INotifyPropertyChanged
     {
         public ObservableCollection<Client> Clients { get; set; }
         public ObservableCollection<Log> Logs { get; set; }
         public Log Log { get; set; }
         public Client SelectedClient { get; set; }
         public Emploee Emploee { get; set; }
-        private Account _selectedAccount;
-        public Account SelectedAccount 
-        { 
-            get => _selectedAccount;
-            set
-            {
-                _selectedAccount = value;
-                if(SelectedClient != null) SelectedClient.SelectedAccount = value;
-            } 
-        }
-        private decimal _sumToAddTake = 0;
+        public Account SelectedAccount { get; set; }
+        
+        private decimal? _sumToAddTake;
         public string SumToAddTakeString
         {
-            
-            set => _sumToAddTake = decimal.TryParse(value,out decimal result)?result:0;
+            get => _sumToAddTake.ToString();
+            set 
+            { 
+                if(decimal.TryParse(value, out decimal result)) _sumToAddTake = result;
+                else _sumToAddTake = null;
+                OnPropertyChanged();
+            } 
         }
         public string Title { get; set; }
         public AddClientWindow AddClientWindow { get; set; }
@@ -167,8 +165,9 @@ namespace Lesson_15
                         JsonMethods.CreateJsonFile("clients.json", Clients);
                         Logs.Add(Log);
                         JsonMethods.CreateJsonFile("logs.json", Logs);
+                        SumToAddTakeString = null;
                         
-                    }, (obj) => SelectedClient != null && SelectedAccount != null && _sumToAddTake != 0));
+                    }, (obj) => SelectedClient != null && SelectedAccount != null && _sumToAddTake != null));
             }
         }
         private RelayCommand _takeSum;
@@ -186,7 +185,8 @@ namespace Lesson_15
                             Logs.Add(Log);
                             JsonMethods.CreateJsonFile("logs.json", Logs);
                         }
-                    }, (obj) => SelectedClient != null && SelectedAccount != null && _sumToAddTake != 0));
+                        SumToAddTakeString = null;
+                    }, (obj) => SelectedClient != null && SelectedAccount != null && _sumToAddTake != null));
             }
         }
         private RelayCommand _transferSum;
@@ -232,6 +232,12 @@ namespace Lesson_15
                         LogListWindow.ShowDialog();
                     }, (obj) => Logs.Count > 0));
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }
