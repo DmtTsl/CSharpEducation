@@ -48,8 +48,13 @@ namespace Task_1_2_3
             get=>_selectedRow;
             set 
             {
-                _selectedRow = value;
-                OnPropertyChanged();
+                if (value != null)
+                {
+                    _selectedRow = value;                    
+                    GetAccessDataSet(_DatabasePath.AccessConnectionString, GetString(value["Email"]));
+                    AccessDataTable = _accessDataSet.Tables[0];
+                }
+               
             } 
         }
         public MainWindowVM()
@@ -86,7 +91,7 @@ namespace Task_1_2_3
             GetSQLDataSet(_DatabasePath.SQLConnectionString);
             
             SQLDataTable = _sqlDataSet.Tables[0];
-            AccessDataTable = _accessDataSet.Tables[0];
+            //AccessDataTable = _accessDataSet.Tables[0];
             
         }
         private void GetSQLDataSet(string sqlStringConnection)
@@ -100,8 +105,18 @@ namespace Task_1_2_3
         {   
             _accessDataSet = new DataSet();
             string selectQuery = "SELECT * FROM [Order] WHERE Email = @email";
-            _accessDataAdapter = new OleDbDataAdapter(selectQuery, accessStringConnection);
-            _accessDataAdapter.Fill(_accessDataSet);  
+            OleDbCommand oleDbCommand = new OleDbCommand()
+            {
+                CommandText = selectQuery,
+                Connection = new OleDbConnection(accessStringConnection)
+            };
+            OleDbParameter oleDbParameter = new OleDbParameter("@email", email);
+            //oleDbCommand.Parameters.AddWithValue("@email", email);
+            oleDbCommand.Parameters.Add(oleDbParameter);
+            
+            _accessDataAdapter = new OleDbDataAdapter(oleDbCommand);
+            _accessDataAdapter.Fill(_accessDataSet);
+            //MessageBox.Show(_accessDataSet.Tables[0].Rows[0][1].ToString());
         }
         private static String GetString(Object o)
         {
@@ -193,7 +208,11 @@ namespace Task_1_2_3
                         _sqlDataAdapter.Update(_sqlDataSet);
                         _sqlDataSet.Clear();
                         _sqlDataAdapter.Fill(_sqlDataSet);
-
+                        OleDbCommandBuilder oleDbCommandBuilder = new OleDbCommandBuilder (_accessDataAdapter);
+                        MessageBox.Show(oleDbCommandBuilder.GetUpdateCommand().CommandText);
+                        _accessDataAdapter.Update(_accessDataSet);
+                        _accessDataSet.Clear();
+                        _accessDataAdapter.Fill(_accessDataSet);
                     }));
             }
         }
@@ -230,9 +249,35 @@ namespace Task_1_2_3
                         section.SectionInformation.ProtectSection("DataProtectionConfigurationProvider");
                         config.Save();
                         GetSQLDataSet(_DatabasePath.SQLConnectionString);
-                        GetAccessDataSet(_DatabasePath.AccessConnectionString);
+                        
                         SQLDataTable = _sqlDataSet.Tables[0];
-                        AccessDataTable = _accessDataSet.Tables[0];
+                        
+                    }));
+            }
+        }
+        private RelayCommand _addOrder;
+        public RelayCommand AddOrder
+        {
+            get
+            {
+                return _addOrder ??
+                    (_addOrder = new RelayCommand(obj =>
+                    {
+                        AddOrderWindowVM addOrderWindowVM = new AddOrderWindowVM();
+                        AddOrderWindow addOrderWindow = new AddOrderWindow()
+                        {                            
+                            DataContext = addOrderWindowVM
+                        };
+                        addOrderWindow.ShowDialog();
+
+                        if (addOrderWindow.DialogResult == true)
+                        {
+                            DataRow newRow = AccessDataTable.NewRow();
+                            newRow[1] = GetString(SelectedRow[5]);
+                            newRow[2] = addOrderWindowVM.ProductCode;
+                            newRow[3] = addOrderWindowVM.ProductName;                            
+                            AccessDataTable.Rows.Add(newRow);
+                        }
                     }));
             }
         }
