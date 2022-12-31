@@ -71,7 +71,7 @@
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -93,19 +93,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\ApplicationCommands.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="ViewModel\AddClientWindowVM.cs" />
     <Compile Include="ViewModel\AddOrderWindowVM.cs" />
+    <Compile Include="ViewModel\AuthenticationVM.cs" />
     <Compile Include="View\AddClientWindow.xaml.cs">
       <DependentUpon>AddClientWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AddOrderWindow.xaml.cs">
       <DependentUpon>AddOrderWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MWindow.xaml.cs">
-      <DependentUpon>MWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="View\Authentication.xaml.cs">
+      <DependentUpon>Authentication.xaml</DependentUpon>
     </Compile>
     <Page Include="View\AddClientWindow.xaml">
       <SubType>Designer</SubType>
@@ -123,15 +122,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Repository\Connection.cs" />
     <Compile Include="Repository\DatabasePath.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\MWindow.xaml">
+    <Page Include="View\Authentication.xaml">
       <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

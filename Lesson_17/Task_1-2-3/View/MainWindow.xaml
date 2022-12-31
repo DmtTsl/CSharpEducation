@@ -5,48 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Task_1_2_3"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="800" Width="1000" WindowStartupLocation="CenterScreen">
     
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="500*"/>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="300*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Menu Grid.ColumnSpan="3">
+        <Menu Grid.ColumnSpan="3" Grid.Row="0">
             <MenuItem Header="Меню">
-                <MenuItem Header="Сохранить" Command="{Binding Save}"></MenuItem>
                 <MenuItem Header="Изменить местоположение баз данных" Command="{Binding ChangeDatabaseLocation}"></MenuItem>
             </MenuItem>
         </Menu>
 
         <DataGrid x:Name="dataGrid" Margin="5,5,5,5" ItemsSource="{Binding SQLDataTable.DefaultView, Mode=OneWay}" CanUserDeleteRows="False" 
-                  SelectedItem="{Binding SelectedRow,Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single">
+                  SelectedItem="{Binding SelectedClient,Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" 
+                  CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" >
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Изменить данные клиента" Command="{Binding ChangeClient}"></MenuItem>
                     <MenuItem Header="Удалить данные клиента" Command="{Binding DeleteClient}"></MenuItem>
                 </ContextMenu>
-                
+
             </DataGrid.ContextMenu>
         </DataGrid>
-        <GridSplitter Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" />
-        <DataGrid Grid.Row="1" Grid.Column="2" Margin="5,5,5,5" ItemsSource="{Binding AccessDataTable.DefaultView, Mode=OneWay}"/>
-        <StackPanel Grid.Column="0" Grid.Row="2" Margin="5,20,5,5">
+        <GridSplitter Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" Margin="0,0,0,0" />
+        <DataGrid Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" ItemsSource="{Binding ClientOrders.DefaultView, Mode=OneWay}" 
+                  SelectedItem="{Binding SelectedOrder, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+                  CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single"/>
+        <StackPanel Grid.Column="0" Grid.Row="2" Margin="5,20,5,5" >
             <Button Height="30" Command="{Binding AddClient}">Добавить клиента</Button>
         </StackPanel>
-        <StackPanel Grid.Column="2" Grid.Row="2" Margin="5,20,5,5">
+        <StackPanel Grid.Column="3" Grid.Row="2" Margin="5,20,5,5">
             <Button Height="30" Command="{Binding AddOrder}">Добавить заказ</Button>
             <Button Height="30" Margin="0,10,0,0" Command="{Binding DeleteOrder}">Удалить заказ</Button>
         </StackPanel>
-        
-        
-        
+
+
+
 
     </Grid>
 </Window>

@@ -1,13 +1,7 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Navigation;
 
 namespace Task_1_2_3
 {
@@ -74,6 +68,15 @@ namespace Task_1_2_3
             _AccessConnectionStringBuilder = new OleDbConnectionStringBuilder();
             _AccessConnectionStringBuilder.ConnectionString = access_OrderDatabasePath;
         }
-        
+        public string GetSQlConnectionString(string login, string password)
+        {
+            _SqlConnectionStringBuilder.UserID+= login;
+            _SqlConnectionStringBuilder.Password= password;
+            return _SqlConnectionStringBuilder.ConnectionString;
+        }
+        public string GetAccessConnectionString()
+        {
+            return _AccessConnectionStringBuilder.ConnectionString;
+        }
     }
 }

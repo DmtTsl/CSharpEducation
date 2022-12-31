@@ -31,12 +31,12 @@
 
                 <TextBlock TextWrapping="Wrap" Text="Наименование товара" Height="15" Margin="10,0,0,0" Grid.Column="0" Grid.Row="1"/>
 
-                
+
                 <TextBox x:Name="textBoxProductCode" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" 
                  Margin="5,5,5,5" Grid.Column="1" Grid.Row="0" Height="25"
-                 Text="{Binding ProductCode, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" >
+                 Text="{Binding ProductCode, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 
-                </TextBox>
+
 
                 <TextBox x:Name="textBoxProductName" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                  Margin="5,5,5,5" Grid.Column="1" Grid.Row="1" Height="25"
